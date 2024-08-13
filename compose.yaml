@@ -3,7 +3,7 @@ name: 'reservation_app'
 services:
 
   postgres:
-
+    # jaki image ma byc uzyty w tyn kontenerze
     image: 'postgres:14.7'
     container_name: 'postgres'
     environment:
@@ -12,23 +12,23 @@ services:
       - 'POSTGRES_USER=user'
     ports:
       - '5432:5432'
-
-#    volumes:
-#      - 'postgres:/var/lib/postgres/data'
+    # pozwala na przechowywanie danych poza filesystemem kontenera, dzieki czemu po jego wylaczeniu nie tracimy danych
+    volumes:
+      - 'postgres_data:/var/lib/postgres/data'
 
 
   reservation_app:
-    # automatyczne budowanie obrazu
+    # automatyczne budowanie obrazu {context-określenie root-dira dla dockera; dockerfile- nazwa dokcerfila }
     build:
       context: './'
-      dockerfile: 'Dockerfile'
+      dockerfile: 'Docker/Dockerfile'
     container_name: 'reservation_app'
     # depends_on - które kontenery zostaną włąaczone najpierw
     depends_on:
       - 'postgres'
     # zmienne srodowiskowe
     environment:
-      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservation_DB'
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/reservation_DB'
       - 'SPRING_DATASOURCE_USERNAME=user'
       - 'SPRING_DATASOURCE-PASSWORD=password'
     # z którego w kontenerze na jaki na localhost
@@ -36,5 +36,5 @@ services:
       - '8080:8080'
 
 
-#volumes:
-#  postgres_data:
+volumes:
+  postgres_data:
