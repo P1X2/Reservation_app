@@ -1,0 +1,40 @@
+name: 'reservation_app'
+
+services:
+
+  postgres:
+
+    image: 'postgres:14.7'
+    container_name: 'postgres'
+    environment:
+      - 'POSTGRES_DB=reservation_DB'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=user'
+    ports:
+      - '5432:5432'
+
+#    volumes:
+#      - 'postgres:/var/lib/postgres/data'
+
+
+  reservation_app:
+    # automatyczne budowanie obrazu
+    build:
+      context: './'
+      dockerfile: 'Dockerfile'
+    container_name: 'reservation_app'
+    # depends_on - które kontenery zostaną włąaczone najpierw
+    depends_on:
+      - 'postgres'
+    # zmienne srodowiskowe
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservation_DB'
+      - 'SPRING_DATASOURCE_USERNAME=user'
+      - 'SPRING_DATASOURCE-PASSWORD=password'
+    # z którego w kontenerze na jaki na localhost
+    ports:
+      - '8080:8080'
+
+
+#volumes:
+#  postgres_data:
