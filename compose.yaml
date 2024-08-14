@@ -16,24 +16,34 @@ services:
     volumes:
       - 'postgres_data:/var/lib/postgres/data'
 
-
-  reservation_app:
-    # automatyczne budowanie obrazu {context-określenie root-dira dla dockera; dockerfile- nazwa dokcerfila }
-    build:
-      context: './'
-      dockerfile: 'Docker/Dockerfile'
-    container_name: 'reservation_app'
-    # depends_on - które kontenery zostaną włąaczone najpierw
-    depends_on:
-      - 'postgres'
-    # zmienne srodowiskowe
+  pg_admin:
+    image: 'dpage/pgadmin4'
+    container_name: 'pgAdmin'
     environment:
-      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/reservation_DB'
-      - 'SPRING_DATASOURCE_USERNAME=user'
-      - 'SPRING_DATASOURCE-PASSWORD=password'
-    # z którego w kontenerze na jaki na localhost
+      - 'PGADMIN_DEFAULT_EMAIL=admin@domain.com'
+      - 'PGADMIN_DEFAULT_PASSWORD=admin'
     ports:
-      - '8080:8080'
+      - '8090:80'
+
+
+#  spring_boot_application:
+#    # automatyczne budowanie obrazu {context-określenie root-dira dla dockera; dockerfile- nazwa dokcerfila }
+#    build:
+#      context: './'
+#      dockerfile: 'Docker/Dockerfile'
+#    container_name: 'reservation_app'
+#    # depends_on - które kontenery zostaną włąaczone najpierw
+#    depends_on:
+#      - 'postgres'
+#      - 'pg_admin'
+#    # zmienne srodowiskowe
+#    environment:
+#      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/reservation_DB'
+#      - 'SPRING_DATASOURCE_USERNAME=user'
+#      - 'SPRING_DATASOURCE-PASSWORD=password'
+#    # z którego w hoscie na ktory w klocku
+#    ports:
+#      - '8080:8080'
 
 
 volumes:

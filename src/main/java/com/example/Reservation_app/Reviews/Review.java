@@ -1,7 +1,7 @@
 package com.example.Reservation_app.Reviews;
 
 
-import com.example.Reservation_app.Appointments.Appointments;
+import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,7 +24,7 @@ public class Review {
     private LocalDateTime createdAt;
 
     @OneToOne(optional = true)
-    private Appointments appointment;
+    private Appointment appointment;
 
 
 

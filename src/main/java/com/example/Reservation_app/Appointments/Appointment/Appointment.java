@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Appointments;
+package com.example.Reservation_app.Appointments.Appointment;
 
 import com.example.Reservation_app.Reviews.Review;
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Entity
 @Data
 @AllArgsConstructor
-public class Appointments {
+public class Appointment {
     @Id
     @GeneratedValue
     private Long id;

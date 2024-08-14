@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Users;
+package com.example.Reservation_app.Users.User;
 
 
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @AllArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue
