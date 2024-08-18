@@ -1,8 +1,9 @@
 package com.example.Reservation_app.Services;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Service {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @Min(0)
     private Integer duration_minutes;
+    @Min(0)
     private Integer price;
     private LocalDateTime created_at;
 }
