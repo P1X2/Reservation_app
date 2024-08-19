@@ -15,21 +15,21 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ServiceController {
 
-    @Autowired
     private final ServiceService serviceService;
 
+    //TODO tu zrobić paginację + @requsetParam
     @GetMapping("/all")
-    List<com.example.Reservation_app.Services.Service> fetchAllServices(){
+    List<com.example.Reservation_app.Services.Service> getAllServices(){
         return serviceService.findAll();
     }
 
     @GetMapping("/by_id/{id}")
-    Optional<com.example.Reservation_app.Services.Service> fetchServiceByID(@PathVariable Long id){
+    Optional<com.example.Reservation_app.Services.Service> getServiceByID(@PathVariable Long id){
         return serviceService.findByID(id);
     }
 
     @GetMapping("/by_name/{name}")
-    Optional<com.example.Reservation_app.Services.Service> fetchServiceByName(@PathVariable String name){
+    Optional<com.example.Reservation_app.Services.Service> getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }
 
@@ -40,11 +40,11 @@ public class ServiceController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/update_service_{id}_{newPrice}")
-    void updateServicePrice(@PathVariable Long id, @PathVariable Integer newPrice){
+    @PutMapping("/update_service")
+    void updateServicePrice(@RequestParam Long id, @RequestParam Integer newPrice){
         serviceService.updatePrice(id, newPrice);
     }
-
+    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{id}")
     void deleteService(@PathVariable Long id){

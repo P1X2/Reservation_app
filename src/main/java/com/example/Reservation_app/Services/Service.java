@@ -1,9 +1,10 @@
 package com.example.Reservation_app.Services;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,11 @@ public class Service {
     private String name;
     @NotEmpty
     private String description;
-    @Min(0)
+    @NotNull
+    @Positive
     private Integer duration_minutes;
-    @Min(0)
+    @NotNull
+    @Positive
     private Integer price;
     private LocalDateTime created_at;
 }
