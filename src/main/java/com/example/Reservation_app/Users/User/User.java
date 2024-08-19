@@ -20,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long user_id;
 
     @NotEmpty
     private UserRole role;
@@ -34,8 +34,8 @@ public class User {
     private String name;
     @NotEmpty
     private String surname;
-    private UserStatus userStatus;
-    private LocalDateTime createdAt;
+    private UserStatus user_status;
+    private LocalDateTime created_At;
 
 
 

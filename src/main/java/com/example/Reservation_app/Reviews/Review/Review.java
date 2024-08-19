@@ -1,10 +1,9 @@
-package com.example.Reservation_app.Reviews;
+package com.example.Reservation_app.Reviews.Review;
 
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long review_id;
 
     @NotEmpty
     private String review_content;

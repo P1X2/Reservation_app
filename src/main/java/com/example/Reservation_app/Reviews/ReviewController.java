@@ -1,12 +1,15 @@
 package com.example.Reservation_app.Reviews;
 
+import com.example.Reservation_app.Reviews.Review.Review;
+import com.example.Reservation_app.Reviews.Review.ReviewDTO;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+//TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
+// *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status)
+// *SPRAWDZIC CZY PAGINACJA DZIAŁA
 
 @RestController
 @AllArgsConstructor
@@ -17,10 +20,10 @@ public class ReviewController {
 
     @GetMapping("/get_by_userID/{userID}")
     Page<Review> getCommentsByUser(@PathVariable Long userID,
-                                       @RequestParam(defaultValue = "0") Integer page,
-                                       @RequestParam(defaultValue = "5") Integer pageSize,
-                                       @RequestParam(defaultValue = "createdAt") String sortBy,
-                                       @RequestParam(defaultValue = "desc") String sortDir)
+                                   @RequestParam(defaultValue = "0") Integer page,
+                                   @RequestParam(defaultValue = "5") Integer pageSize,
+                                   @RequestParam(defaultValue = "createdAt") String sortBy,
+                                   @RequestParam(defaultValue = "desc") String sortDir)
 
     {
         return reviewService.getByUserID(userID, page, pageSize, sortBy, sortDir);

@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "service_id")
+    private Long service_id;
 
     @NotEmpty
     private String name;

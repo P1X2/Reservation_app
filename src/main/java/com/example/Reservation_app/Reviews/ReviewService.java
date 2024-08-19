@@ -2,10 +2,9 @@ package com.example.Reservation_app.Reviews;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.AppointmentRepository;
-import com.example.Reservation_app.Services.ServiceRepository;
+import com.example.Reservation_app.Reviews.Review.Review;
+import com.example.Reservation_app.Reviews.Review.ReviewDTO;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,23 +26,26 @@ public class ReviewService {
 
     Page<Review> getByUserID(Long userID, Integer page, Integer pageSize, String sortBy, String sortDir){
 
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+//        Sort sort = Sort.by(sortBy);
+//        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+//        Pageable metadata = PageRequest.of(page, pageSize, sort);
 
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
+        Pageable metadata = PageRequest.of(page, pageSize);
+
         return reviewRepository.findByUsername(userID, metadata);
     }
 
     Page<Review> getByServiceID(Long serviceID, Integer page, Integer pageSize, String sortBy, String sortDir){
+//
+//        Sort sort = Sort.by(sortBy);
+//        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+//        Pageable metadata = PageRequest.of(page, pageSize, sort);
 
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+        Pageable metadata = PageRequest.of(page, pageSize);
 
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
         return reviewRepository.findByService(serviceID, metadata);
     }
 
-    //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG??
     void addReview(Long appointment_id, ReviewDTO reviewDTO){
 
         Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointment_id);
@@ -77,7 +79,13 @@ public class ReviewService {
     }
 
     void deleteComment(Long id){
-        reviewRepository.deleteById(id);
+
+        Optional<Review> reviewRecord = reviewRepository.findById(id);
+        if(reviewRecord.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        reviewRepository.delete(reviewRecord.get());
     }
 
 }

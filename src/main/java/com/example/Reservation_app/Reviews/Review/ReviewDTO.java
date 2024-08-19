@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Reviews;
+package com.example.Reservation_app.Reviews.Review;
 
 
 import jakarta.validation.constraints.NotEmpty;

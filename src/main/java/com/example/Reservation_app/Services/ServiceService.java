@@ -17,8 +17,8 @@ public class ServiceService {
 
     private final ServiceRepository serviceRepository;
 
-    Optional<com.example.Reservation_app.Services.Service> findByID(Long id){
-        Optional<com.example.Reservation_app.Services.Service> serviceRecord = serviceRepository.findById(id);
+    Optional<com.example.Reservation_app.Services.Service> findByID(Long serviceId){
+        Optional<com.example.Reservation_app.Services.Service> serviceRecord = serviceRepository.findById(serviceId);
         if (serviceRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "reason: reason");
         }
@@ -43,9 +43,9 @@ public class ServiceService {
         serviceRepository.save(service);
     }
 
-    void updatePrice(Long id, Integer newPrice){
+    void updatePrice(Long serviceId, Integer newPrice){
 
-        Optional<com.example.Reservation_app.Services.Service> serviceRecord = this.findByID(id);
+        Optional<com.example.Reservation_app.Services.Service> serviceRecord = this.findByID(serviceId);
         if(serviceRecord.isEmpty()){throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
 
         com.example.Reservation_app.Services.Service updatedService = serviceRecord.get();
@@ -53,8 +53,8 @@ public class ServiceService {
         serviceRepository.save(updatedService);
     }
 
-    void delete(Long id){
-        serviceRepository.deleteById(id);
+    void delete(Long serviceId){
+        serviceRepository.deleteById(serviceId);
     }
 
 }

@@ -17,15 +17,15 @@ public class ServiceController {
 
     private final ServiceService serviceService;
 
-    //TODO tu zrobić paginację + @requsetParam
+    //TODO tu zrobić paginację
     @GetMapping("/all")
     List<com.example.Reservation_app.Services.Service> getAllServices(){
         return serviceService.findAll();
     }
 
-    @GetMapping("/by_id/{id}")
-    Optional<com.example.Reservation_app.Services.Service> getServiceByID(@PathVariable Long id){
-        return serviceService.findByID(id);
+    @GetMapping("/by_id/{serviceId}")
+    Optional<com.example.Reservation_app.Services.Service> getServiceByID(@PathVariable Long serviceId){
+        return serviceService.findByID(serviceId);
     }
 
     @GetMapping("/by_name/{name}")
@@ -41,14 +41,17 @@ public class ServiceController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/update_service")
-    void updateServicePrice(@RequestParam Long id, @RequestParam Integer newPrice){
-        serviceService.updatePrice(id, newPrice);
+    void updateServicePrice(
+            @RequestParam Long serviceId,
+            @RequestParam Integer newPrice)
+    {
+        serviceService.updatePrice(serviceId, newPrice);
     }
     //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{id}")
-    void deleteService(@PathVariable Long id){
-        serviceService.delete(id);
+    void deleteService(@PathVariable Long serviceId){
+        serviceService.delete(serviceId);
     }
 
 }

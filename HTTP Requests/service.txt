@@ -1,0 +1,13 @@
+* all: http://localhost:8080/service/all
+* by name: http://localhost:8080/service/by_name/haircut
+* by id: http://localhost:8080/service/by_id/9
+
+* add new: http://localhost:8080/service/add_service
+{
+    "name": "New Service Name",
+    "description": "Description for the new service",
+    "duration_minutes": 45,
+    "price": 80,
+}
+
+* update price: http://localhost:8080/service/update_service?serviceId=????&newPrice=999
