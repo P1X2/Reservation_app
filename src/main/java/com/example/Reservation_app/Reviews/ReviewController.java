@@ -2,6 +2,7 @@ package com.example.Reservation_app.Reviews;
 
 import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Reviews.Review.ReviewDTO;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
 // *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status)
 // *SPRAWDZIC CZY PAGINACJA DZIAŁA
+// refactor znaw z ID + w txt!!
+// *** pozmieniac querries w repozytorium (nazwy id)
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -40,25 +43,25 @@ public class ReviewController {
     }
 
 
-    @PostMapping("/add_comment_appointment/id_{appointment_id}")
+    @PostMapping("/add_comment_appointment")
     @ResponseStatus(HttpStatus.CREATED)
-    void addComment(@PathVariable Long appointment_id, @RequestBody ReviewDTO reviewDTO)
+    void addComment(@RequestParam Long appointmentID, @RequestBody @Valid ReviewDTO reviewDTO)
     {
-        reviewService.addReview(appointment_id, reviewDTO);
+        reviewService.addReview(appointmentID, reviewDTO);
     }
 
-    @PutMapping("/update_review/{id}")
+    @PutMapping("/update_review")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void updateCommentRating(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO)
+    void updateCommentRating(@RequestParam Long reviewID, @RequestBody @Valid ReviewDTO reviewDTO)
     {
-        reviewService.updateReview(id, reviewDTO);
+        reviewService.updateReview(reviewID, reviewDTO);
     }
 
-    @DeleteMapping("/delete_comment/{id}")
+    @DeleteMapping("/delete_review")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteComment(@PathVariable Long id)
+    void deleteComment(@RequestParam Long reviewID)
     {
-        reviewService.deleteComment(id);
+        reviewService.deleteComment(reviewID);
     }
 
 

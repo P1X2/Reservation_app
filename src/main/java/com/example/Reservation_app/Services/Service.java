@@ -1,5 +1,6 @@
 package com.example.Reservation_app.Services;
 
+import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,4 +34,8 @@ public class Service {
     @Positive
     private Integer price;
     private LocalDateTime created_at;
+
+    // mappedBy - indicates var in owning side of rel, in which corresponding services are stored ~ Non-Owning Side: This is the side that uses the mappedBy attribute to refer to the owning side.
+    @OneToMany(mappedBy = "service")
+    private List<Appointment> appointment;
 }

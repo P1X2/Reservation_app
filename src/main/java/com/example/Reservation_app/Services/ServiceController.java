@@ -49,8 +49,8 @@ public class ServiceController {
     }
     //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete/{id}")
-    void deleteService(@PathVariable Long serviceId){
+    @DeleteMapping("/delete")
+    void deleteService(@RequestParam Long serviceId){
         serviceService.delete(serviceId);
     }
 

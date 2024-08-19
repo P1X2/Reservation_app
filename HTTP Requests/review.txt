@@ -1,0 +1,24 @@
+GET
+ * by username:
+ * by service:
+
+ POST
+ * add new: http://localhost:8080/reviews/add_comment_appointment?appointmentID=9
+{
+    "review_content" : "ausgezeichnet!",
+    "rating": 5
+}
+
+
+ PUT:
+ * content and rating: http://localhost:8080/reviews/update_review?reviewID=9
+{
+    "review_content" : "klaskałem na stojaco",
+    "rating": 4
+}
+
+
+ DELETE
+ * review (without cascade): http://localhost:8080/reviews/delete_review?reviewID=5
+
+

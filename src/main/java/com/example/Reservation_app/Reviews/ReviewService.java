@@ -46,9 +46,9 @@ public class ReviewService {
         return reviewRepository.findByService(serviceID, metadata);
     }
 
-    void addReview(Long appointment_id, ReviewDTO reviewDTO){
+    void addReview(Long appointmentID, ReviewDTO reviewDTO){
 
-        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointment_id);
+        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentID);
         if (appointmentRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No such appointment in database");
         }
@@ -63,9 +63,9 @@ public class ReviewService {
 
     }
 
-    void updateReview(Long id, ReviewDTO reviewDTO){
+    void updateReview(Long reviewID, ReviewDTO reviewDTO){
 
-        Optional<Review> reviewRecord = reviewRepository.findById(id);
+        Optional<Review> reviewRecord = reviewRepository.findById(reviewID);
         if(reviewRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -78,9 +78,9 @@ public class ReviewService {
 
     }
 
-    void deleteComment(Long id){
+    void deleteComment(Long reviewID){
 
-        Optional<Review> reviewRecord = reviewRepository.findById(id);
+        Optional<Review> reviewRecord = reviewRepository.findById(reviewID);
         if(reviewRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@AllArgsConstructor
-//@RequestMapping("/Appointment")
+@RestController
+@AllArgsConstructor
+@RequestMapping("/Appointment")
 public class AppointmentController {
 
-//    private final AppointmentService appointmentService;
-//    private AppointmentRepository appointmentRepository;
-
+    private final AppointmentService appointmentService;
 
 //    void xd(){appointmentRepository.findById()}
 
