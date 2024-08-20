@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
 // *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status)
-// *SPRAWDZIC CZY PAGINACJA DZIAŁA
-// refactor znaw z Id + w txt!!
-// *** pozmieniac querries w repozytorium (nazwy Id)
+
+
 
 @RestController
 @AllArgsConstructor
@@ -33,7 +32,7 @@ public class ReviewController {
         return reviewService.getByUserId(userId, page, pageSize, sortBy, sortDir);
     }
 
-    @GetMapping("/get_by_service/{serviceId}")
+    @GetMapping("/get_by_serviceId/{serviceId}")
     Page<Review> getCommentByService(@PathVariable Long serviceId,
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "2") Integer pageSize,

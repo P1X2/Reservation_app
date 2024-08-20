@@ -12,6 +12,6 @@ public record AppointmentDTO(
         @NotNull
         Long employeeId,
         @NotNull
-        LocalDateTime appointmentId
+        LocalDateTime appointmentDate
 )
 {}

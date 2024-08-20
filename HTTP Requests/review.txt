@@ -1,9 +1,9 @@
 GET
  * by userId: http://localhost:8080/review/get_by_userId/18
- * by service: http://localhost:8080/review/get_by_service/10
+ * by service: http://localhost:8080/review/get_by_serviceId/10
 
  POST
- * add new: http://localhost:8080/reviews/add_comment_appointment?appointmentID=9
+ * add new: http://localhost:8080/review/add_comment_appointment?appointmentId=9
 {
     "review_content" : "ausgezeichnet!",
     "rating": 5
@@ -11,7 +11,7 @@ GET
 
 
  PUT:
- * content and rating: http://localhost:8080/reviews/update_review?reviewID=9
+ * content and rating: http://localhost:8080/review/update_review?reviewId=9
 {
     "review_content" : "klaskałem na stojaco",
     "rating": 4
@@ -19,6 +19,6 @@ GET
 
 
  DELETE
- * review (without cascade): http://localhost:8080/reviews/delete_review?reviewID=5
+ * review (without cascade): http://localhost:8080/review/delete_review?reviewId=5
 
 

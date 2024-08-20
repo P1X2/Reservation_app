@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.List;
 
 @Repository
@@ -23,8 +24,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query(value = "SELECT R.REVIEW_ID " +
             "FROM APPOINTMENT A " +
-            "JOIN REVIEW R USING REVIEW_ID " +
+            "JOIN REVIEW R USING (APPOINTMENT_ID) " +
             "WHERE (A.APPOINTMENT_ID = :appointmentId)", nativeQuery = true)
-    Long findReviewsToDelete(@Param("appointmentId") Long appointmentId);
+    Optional<Long> findReviewsToDelete(@Param("appointmentId") Long appointmentId);
 
 }

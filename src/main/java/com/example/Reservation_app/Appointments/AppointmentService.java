@@ -63,7 +63,7 @@ public class AppointmentService {
         newAppointment.setService(service.get());
         newAppointment.setClient(client.get());
         newAppointment.setEmployee(employee.get());
-        newAppointment.setAppointment_date(LocalDateTime.now());
+        newAppointment.setAppointment_date(appointmentDTO.appointmentDate());
         newAppointment.setStatus(AppointmentStatus.PENDING_PAYMENT);
 
         appointmentRepository.save(newAppointment);
@@ -94,9 +94,12 @@ public class AppointmentService {
         }
 
         Appointment appointment = appointmentRecord.get();
-        Long bandedReview = appointmentRepository.findReviewsToDelete(appointment.getAppointment_id());
+        Optional<Long> bandedReview = appointmentRepository.findReviewsToDelete(appointment.getAppointment_id());
 
-        reviewRepository.deleteById(bandedReview);
+        if(bandedReview.isPresent()){
+            reviewRepository.deleteById(bandedReview.get());
+        }
+
         appointmentRepository.delete(appointment);
     }
 

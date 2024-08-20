@@ -23,51 +23,51 @@ public class UserService {
     private final AppointmentRepository appointmentRepository;
 
 
-//    User getUserById(Long userId) {
-//        return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-//
-//    void addUser(UserDTO userDTO){
-//
-//        User newUser = new User();
-//        newUser.setName(userDTO.name());
-//        newUser.setSurname(userDTO.surname());
-//        newUser.setPassword(userDTO.password());
-//        newUser.setUsername(userDTO.username());
-//        newUser.setEmail(userDTO.email());
-//
-//        newUser.setUser_status(UserStatus.ACTIVE);
-//        newUser.setRole(UserRole.CLIENT);
-//        newUser.setCreated_At(LocalDateTime.now());
-//
-//        userRepository.save(newUser);
-//    }
-//
-//    void changeUserStatus(Long userId, UserStatus newStatus){
-//
-//        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        user.setUser_status(newStatus);
-//        userRepository.save(user);
-//    }
-//
-//    void changeUserPassword(Long userId, String newPassword){
-//
-//        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        user.setPassword(newPassword);
-//        userRepository.save(user);
-//    }
-//
-//    void deleteUser(Long userId)
-//    {
-//        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        List<Appointment> userAppointments =  user.getClientAppointment();
-//        userAppointments.addAll(user.getEmployeeAppointment());
-//
-//        appointmentRepository.deleteAll(userAppointments);
-//        userRepository.delete(user);
-//    }
+    User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    void addUser(UserDTO userDTO){
+
+        User newUser = new User();
+        newUser.setName(userDTO.name());
+        newUser.setSurname(userDTO.surname());
+        newUser.setPassword(userDTO.password());
+        newUser.setUsername(userDTO.username());
+        newUser.setEmail(userDTO.email());
+
+        newUser.setUser_status(UserStatus.ACTIVE);
+        newUser.setRole(UserRole.CLIENT);
+        newUser.setCreated_At(LocalDateTime.now());
+
+        userRepository.save(newUser);
+    }
+
+    void changeUserStatus(Long userId, UserStatus newStatus){
+
+        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        user.setUser_status(newStatus);
+        userRepository.save(user);
+    }
+
+    void changeUserPassword(Long userId, String newPassword){
+
+        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
+
+    void deleteUser(Long userId)
+    {
+        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        List<Appointment> userAppointments =  user.getClientAppointment();
+        userAppointments.addAll(user.getEmployeeAppointment());
+
+        appointmentRepository.deleteAll(userAppointments);
+        userRepository.delete(user);
+    }
 
 }

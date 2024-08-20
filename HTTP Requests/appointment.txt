@@ -5,13 +5,19 @@ GET
 
 
 POST
-
-
-
-
+* new app : http://localhost:8080/appointment/create_new_
+{
+    "serviceId" : "9",
+    "clientId" : "21",
+    "employeeId" : "16",
+    "appointmentDate": "2024-08-27T14:45:00"
+}
 
 PUT
+* update app status : http://localhost:8080/appointment/update_status?appointmentId=10&newStatus=DONE_PAYMENT
 
+DELETE
+* delete appointment :
 
 
 

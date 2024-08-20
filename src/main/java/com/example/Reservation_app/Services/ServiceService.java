@@ -53,8 +53,8 @@ public class ServiceService {
         serviceRepository.save(updatedService);
     }
 
-    void delete(Long serviceId){
-        serviceRepository.deleteById(serviceId);
-    }
+//    void delete(Long serviceId){
+//        serviceRepository.deleteById(serviceId);
+//    }
 
 }

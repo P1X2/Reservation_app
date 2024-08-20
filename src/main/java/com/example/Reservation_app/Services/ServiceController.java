@@ -47,11 +47,11 @@ public class ServiceController {
     {
         serviceService.updatePrice(serviceId, newPrice);
     }
-    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete")
-    void deleteService(@RequestParam Long serviceId){
-        serviceService.delete(serviceId);
-    }
+//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @DeleteMapping("/delete")
+//    void deleteService(@RequestParam Long serviceId){
+//        serviceService.delete(serviceId);
+//    }
 
 }

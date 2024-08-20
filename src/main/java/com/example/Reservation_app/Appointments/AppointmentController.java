@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@RestController
-@AllArgsConstructor
-@RequestMapping("/appointment")
 //todo endpoint do oplacania dla usera
 // end dla pracownikow do potwierdzania
 // WSPOLNY END  DO CANCELOWANIA
 // AUTOMATYCZNY SERVICE DO ZMIANY STANU APP JESLI DATA W DB < NOW()
 // get all app by user_id
 
+@RestController
+@AllArgsConstructor
+@RequestMapping("/appointment")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -33,22 +33,22 @@ public class AppointmentController {
             @RequestParam(defaultValue = "2") Integer pageSize,
             @RequestParam(defaultValue = "appointment_date") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
-    ){
-
+    )
+    {
         return appointmentService.getAppointmentsByDate(date, page, pageSize, sortBy, sortDir);
     }
 
     //todo @GetMapping("get_appointment_by_userId/{userId}")
 
 
-    @PostMapping("/create_new_appointment")
+    @PostMapping("/create_new")
     @ResponseStatus(HttpStatus.CREATED)
     void createNewAppointment(@Valid @RequestBody AppointmentDTO appointmentDTO)
     {
         appointmentService.addNewAppointment(appointmentDTO);
     }
 
-    @PutMapping("/update_appointment_status")
+    @PutMapping("/update_status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void updateAppointmentStatus(
             @RequestParam Long appointmentId,
