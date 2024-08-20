@@ -1,0 +1,18 @@
+GET
+* by date: http://localhost:8080/appointment/get_appointment_for_date/14-08-2024?pageSize=3&page=0&sortDir=desc
+* by userId :
+
+
+
+POST
+
+
+
+
+
+PUT
+
+
+
+
+

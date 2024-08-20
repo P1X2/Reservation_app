@@ -38,7 +38,4 @@ public class Service {
     private LocalDateTime created_at;
 
     // mappedBy - indicates var in owning side of rel, in which corresponding services are stored ~ Non-Owning Side: This is the side that uses the mappedBy attribute to refer to the owning side.
-    @OneToMany(mappedBy = "service")
-    @JsonManagedReference
-    private List<Appointment> appointment;
 }

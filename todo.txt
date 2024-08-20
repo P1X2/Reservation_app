@@ -1,8 +1,10 @@
 //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
 // *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status)
-// *SPRAWDZIC CZY PAGINACJA DZIAŁA
-// refactor znaw z ID + w txt!!
-// *** pozmieniac querries w repozytorium (nazwy id)
+// *SPRAWDZIC CZY PAGINACJA DZIAŁA DONE
+// refactor znaw z ID + w txt!! DONE
+// *** pozmieniac querries w repozytorium (nazwy id) DONE
+
+DO USUWANIA APPOINTMENTOW ZROBIC CUSTOMOWĄ FUNKCJE W REVIEW REPOSITORY
 
 
 Appointment
@@ -10,4 +12,6 @@ Appointment
 // end dla pracownikow do potwierdzania
 // WSPOLNY END  DO CANCELOWANIA
 // AUTOMATYCZNY SERVICE DO ZMIANY STANU APP JESLI DATA W DB < NOW()
+
 // get all app by user_id
+// GET dla usera (zaplanowane wizyty)

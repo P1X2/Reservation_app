@@ -35,7 +35,7 @@ public class ServiceService {
     }
 
     List<com.example.Reservation_app.Services.Service> findAll(){
-        return  serviceRepository.findAll();
+        return serviceRepository.findAll();
     }
 
     void save(com.example.Reservation_app.Services.Service service){

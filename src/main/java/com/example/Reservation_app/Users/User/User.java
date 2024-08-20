@@ -43,12 +43,4 @@ public class User {
 
     private LocalDateTime created_At;
 
-    @OneToMany(mappedBy = "employee")
-    List<Appointment> employeeAppointment;
-
-    @OneToMany(mappedBy = "client")
-    List<Appointment> clientAppointment;
-
-
-
 }

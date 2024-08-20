@@ -9,6 +9,10 @@ import com.example.Reservation_app.Services.ServiceRepository;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,12 +33,17 @@ public class AppointmentService {
     private final ReviewRepository reviewRepository;
 
 
-    List<Appointment> getAppointmentsByDate(LocalDate date)
+    Page<Appointment> getAppointmentsByDate(LocalDate date, Integer page, Integer pageSize, String sortBy, String sortDir)
     {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(LocalTime.MAX);
 
-        return appointmentRepository.findAllByDate(start, end);
+        Sort sort = Sort.by(sortBy);
+        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+
+        Pageable metadata = PageRequest.of(page, pageSize, sort);
+
+        return appointmentRepository.findAllByDate(start, end, metadata);
     }
 
 
@@ -85,9 +94,9 @@ public class AppointmentService {
         }
 
         Appointment appointment = appointmentRecord.get();
-        Review bandedReview = appointment.getReview();
+        Long bandedReview = appointmentRepository.findReviewsToDelete(appointment.getAppointment_id());
 
-        reviewRepository.delete(bandedReview);
+        reviewRepository.deleteById(bandedReview);
         appointmentRepository.delete(appointment);
     }
 

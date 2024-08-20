@@ -40,8 +40,7 @@ public class Appointment {
     @JoinColumn(name = "employee_id", nullable = false)
     private User employee;
 
-
-    @OneToOne(optional = true, mappedBy = "appointment", cascade = CascadeType.ALL)
-    private Review review;
+//    @OneToOne(optional = true, mappedBy = "appointment", cascade = CascadeType.ALL)
+//    private Review review;
 
 }

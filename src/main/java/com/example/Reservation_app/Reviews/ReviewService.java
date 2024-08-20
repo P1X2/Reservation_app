@@ -24,31 +24,27 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final AppointmentRepository appointmentRepository;
 
-    Page<Review> getByUserID(Long userID, Integer page, Integer pageSize, String sortBy, String sortDir){
+    Page<Review> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir){
 
-//        Sort sort = Sort.by(sortBy);
-//        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-//        Pageable metadata = PageRequest.of(page, pageSize, sort);
+        Sort sort = Sort.by(sortBy);
+        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+        Pageable metadata = PageRequest.of(page, pageSize, sort);
 
-        Pageable metadata = PageRequest.of(page, pageSize);
-
-        return reviewRepository.findByUsername(userID, metadata);
+        return reviewRepository.findByUsername(userId, metadata);
     }
 
-    Page<Review> getByServiceID(Long serviceID, Integer page, Integer pageSize, String sortBy, String sortDir){
+    Page<Review> getByServiceId(Long serviceId, Integer page, Integer pageSize, String sortBy, String sortDir){
 //
-//        Sort sort = Sort.by(sortBy);
-//        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-//        Pageable metadata = PageRequest.of(page, pageSize, sort);
+        Sort sort = Sort.by(sortBy);
+        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+        Pageable metadata = PageRequest.of(page, pageSize, sort);
 
-        Pageable metadata = PageRequest.of(page, pageSize);
-
-        return reviewRepository.findByService(serviceID, metadata);
+        return reviewRepository.findByService(serviceId, metadata);
     }
 
-    void addReview(Long appointmentID, ReviewDTO reviewDTO){
+    void addReview(Long appointmentId, ReviewDTO reviewDTO){
 
-        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentID);
+        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentId);
         if (appointmentRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No such appointment in database");
         }
@@ -63,9 +59,9 @@ public class ReviewService {
 
     }
 
-    void updateReview(Long reviewID, ReviewDTO reviewDTO){
+    void updateReview(Long reviewId, ReviewDTO reviewDTO){
 
-        Optional<Review> reviewRecord = reviewRepository.findById(reviewID);
+        Optional<Review> reviewRecord = reviewRepository.findById(reviewId);
         if(reviewRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -78,9 +74,9 @@ public class ReviewService {
 
     }
 
-    void deleteComment(Long reviewID){
+    void deleteComment(Long reviewId){
 
-        Optional<Review> reviewRecord = reviewRepository.findById(reviewID);
+        Optional<Review> reviewRecord = reviewRepository.findById(reviewId);
         if(reviewRecord.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
