@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -35,15 +36,19 @@ public class User {
     @NotEmpty
     private String surname;
 
+    @Enumerated(EnumType.STRING)
     private UserStatus user_status;
-    private LocalDateTime created_At;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    private LocalDateTime created_At;
 
     @OneToMany(mappedBy = "employee")
     List<Appointment> employeeAppointment;
 
     @OneToMany(mappedBy = "client")
     List<Appointment> clientAppointment;
+
 
 
 }

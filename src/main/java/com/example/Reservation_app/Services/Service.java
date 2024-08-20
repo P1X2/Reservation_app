@@ -1,6 +1,8 @@
 package com.example.Reservation_app.Services;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,5 +39,6 @@ public class Service {
 
     // mappedBy - indicates var in owning side of rel, in which corresponding services are stored ~ Non-Owning Side: This is the side that uses the mappedBy attribute to refer to the owning side.
     @OneToMany(mappedBy = "service")
+    @JsonManagedReference
     private List<Appointment> appointment;
 }
