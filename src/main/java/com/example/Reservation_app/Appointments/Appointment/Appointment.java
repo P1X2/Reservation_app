@@ -5,7 +5,6 @@ import com.example.Reservation_app.Services.Service;
 import com.example.Reservation_app.Users.User.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,31 +21,23 @@ public class Appointment {
     @Column(name = "appointment_id")
     private Long appointment_id;
 
-    private LocalDateTime appointmeny_date;
-    @NotEmpty
+    private LocalDateTime appointment_date;
     private AppointmentStatus status;
 
     @ManyToOne(optional = false)
-    // name = "xxx" - references table in DB, not var in service instance
+    // name = "xxx" - references table in DB, not var in service instance (fk's in appointment table)
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private User client;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "employee_id", nullable = false)
     private User employee;
 
-    @OneToOne(optional = true, mappedBy = "appointment")
+    @OneToOne(optional = true, mappedBy = "appointment", cascade = CascadeType.ALL)
     private Review review;
-
-
-
-
-
-
-
 
 }
