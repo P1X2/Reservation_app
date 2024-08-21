@@ -3,7 +3,6 @@ package com.example.Reservation_app.Appointments;
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentDTO;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
-import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Reviews.ReviewRepository;
 import com.example.Reservation_app.Services.ServiceRepository;
 import com.example.Reservation_app.Users.User.User;
@@ -20,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,7 +31,7 @@ public class AppointmentService {
     private final ReviewRepository reviewRepository;
 
 
-    Page<Appointment> getAppointmentsByDate(LocalDate date, Integer page, Integer pageSize, String sortBy, String sortDir)
+    Page<Appointment> getByDate(LocalDate date, Integer page, Integer pageSize, String sortBy, String sortDir)
     {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(LocalTime.MAX);
@@ -46,8 +44,21 @@ public class AppointmentService {
         return appointmentRepository.findAllByDate(start, end, metadata);
     }
 
+    //TODO TEST
+    Page<Appointment> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir)
+    {
+        User client = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-    void addNewAppointment(AppointmentDTO appointmentDTO){
+        Sort sort = Sort.by(sortBy);
+        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+
+        Pageable metadata = PageRequest.of(page, pageSize, sort);
+
+        return appointmentRepository.findByClient(client, metadata);
+    }
+
+
+    void addNew(AppointmentDTO appointmentDTO){
 
         Optional<User> client = userRepository.findById(appointmentDTO.clientId());
         Optional<User> employee = userRepository.findById(appointmentDTO.employeeId());
@@ -70,7 +81,7 @@ public class AppointmentService {
 
     }
 
-    void updateAppointmentStatus(Long appointmentId, AppointmentStatus newStatus)
+    void updateStatus(Long appointmentId, AppointmentStatus newStatus)
     {
         Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentId);
 
@@ -86,7 +97,7 @@ public class AppointmentService {
 
     }
 
-    void deleteAppointment(Long appointmentID)
+    public void delete(Long appointmentID)
     {
         Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentID);
         if (appointmentRecord.isEmpty()){

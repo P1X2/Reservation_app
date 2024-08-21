@@ -1,0 +1,26 @@
+GET
+* get by id : http://localhost:8080/user/add
+
+
+
+POST
+* add new : http://localhost:8080/user/add
+{
+    "username": "johndoe",
+    "password": "securepassword123",
+    "email": "johndoe@example.com",
+    "name": "John",
+    "surname": "Doe"
+}
+
+
+
+PUT
+* status : http://localhost:8080/user/update_status?userId=22&newStatus=SUSPENDED
+* role : http://localhost:8080/user/update_role?userId=22&newRole=EMPLOYEE
+* password : http://localhost:8080/user/update_password?userId=22&newPassword=xpp
+
+
+
+DELETE
+* user :

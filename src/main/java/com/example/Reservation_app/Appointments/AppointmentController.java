@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 //todo endpoint do oplacania dla usera
 // end dla pracownikow do potwierdzania
@@ -26,7 +25,7 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    @GetMapping("/get_appointment_for_date/{date}")
+    @GetMapping("/get_for_date/{date}")
     Page<Appointment> getAppointmentsByDate(
             @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
             @RequestParam(defaultValue = "0") Integer page,
@@ -35,17 +34,29 @@ public class AppointmentController {
             @RequestParam(defaultValue = "asc") String sortDir
     )
     {
-        return appointmentService.getAppointmentsByDate(date, page, pageSize, sortBy, sortDir);
+        return appointmentService.getByDate(date, page, pageSize, sortBy, sortDir);
     }
 
-    //todo @GetMapping("get_appointment_by_userId/{userId}")
+    @GetMapping("/get_by_userId")
+    Page<Appointment> getAppointmentsByUserId(
+            @RequestParam Long userId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "2") Integer pageSize,
+            @RequestParam(defaultValue = "appointment_date") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+    )
+    {
+        return appointmentService.getByUserId(userId, page, pageSize, sortBy, sortDir);
+    }
+
+
 
 
     @PostMapping("/create_new")
     @ResponseStatus(HttpStatus.CREATED)
     void createNewAppointment(@Valid @RequestBody AppointmentDTO appointmentDTO)
     {
-        appointmentService.addNewAppointment(appointmentDTO);
+        appointmentService.addNew(appointmentDTO);
     }
 
     @PutMapping("/update_status")
@@ -55,14 +66,14 @@ public class AppointmentController {
             @RequestParam AppointmentStatus newStatus
             )
     {
-        appointmentService.updateAppointmentStatus(appointmentId, newStatus);
+        appointmentService.updateStatus(appointmentId, newStatus);
     }
 
     @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteAppointment(@RequestParam Long appointmentId)
     {
-        appointmentService.deleteAppointment(appointmentId);
+        appointmentService.delete(appointmentId);
     }
 
 }

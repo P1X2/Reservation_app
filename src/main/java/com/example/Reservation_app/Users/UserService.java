@@ -2,6 +2,7 @@ package com.example.Reservation_app.Users;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.AppointmentRepository;
+import com.example.Reservation_app.Appointments.AppointmentService;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.UserDTO;
 import com.example.Reservation_app.Users.User.UserRole;
@@ -13,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,13 +21,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
 
-    User getUserById(Long userId) {
+    User getById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    void addUser(UserDTO userDTO){
+    void addNew(UserDTO userDTO){
 
         User newUser = new User();
         newUser.setName(userDTO.name());
@@ -43,7 +44,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    void changeUserStatus(Long userId, UserStatus newStatus){
+    void updateStatus(Long userId, UserStatus newStatus){
 
         User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -51,7 +52,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    void changeUserPassword(Long userId, String newPassword){
+    void updateRole(Long userId, UserRole newRole){
+
+        User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        user.setRole(newRole);
+        userRepository.save(user);
+    }
+
+    void updatePassword(Long userId, String newPassword){
 
         User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -59,14 +68,17 @@ public class UserService {
         userRepository.save(user);
     }
 
-    void deleteUser(Long userId)
+    void delete(Long userId)
     {
         User user = userRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        List<Appointment> bandedAppointments = appointmentRepository.findByClient(user);
 
-        List<Appointment> userAppointments =  user.getClientAppointment();
-        userAppointments.addAll(user.getEmployeeAppointment());
+        // nie moze byc zwykly deletAll, bo na app jest reference z review ~ moze custom deleteAll, który przyjmuje liste app
+        for (Appointment app : bandedAppointments)
+        {
+            appointmentService.delete(app.getAppointment_id());
+        }
 
-        appointmentRepository.deleteAll(userAppointments);
         userRepository.delete(user);
     }
 

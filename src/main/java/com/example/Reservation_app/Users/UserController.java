@@ -2,58 +2,65 @@ package com.example.Reservation_app.Users;
 
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.UserDTO;
+import com.example.Reservation_app.Users.User.UserRole;
 import com.example.Reservation_app.Users.User.UserStatus;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/get_by_id")
-    User getUserById(@RequestParam Long userId)
+    User getById(@RequestParam Long userId)
     {
-        return userService.getUserById(userId);
+        return userService.getById(userId);
     }
 
-    //todo strnicowanie
-//    @GetMapping("/get_by_status")
-
-    @PostMapping("/add_user")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    void addUser(@RequestBody @Valid UserDTO userDTO)
+    void addNew(@RequestBody @Valid UserDTO userDTO)
     {
-        userService.addUser(userDTO);
+        userService.addNew(userDTO);
     }
 
-    @PutMapping("/change_user_status")
+    @PutMapping("/update_status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void changeUserStatus(@RequestParam Long userId, @RequestParam UserStatus newStatus)
+    void updateStatus(
+            @RequestParam Long userId,
+            @RequestParam UserStatus newStatus)
     {
-        userService.changeUserStatus(userId, newStatus);
+        userService.updateStatus(userId, newStatus);
+    }
+    @PutMapping("/update_role")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void updateRole(
+            @RequestParam Long userId,
+            @RequestParam UserRole newRole)
+    {
+        userService.updateRole(userId, newRole);
     }
 
-    @PutMapping("/change_user_password")
+    @PutMapping("/update_password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void changeUserDetails(@RequestParam Long userId, @RequestParam String newPassword)
+    void updatePassword(
+            @RequestParam Long userId,
+            @RequestParam String newPassword)
     {
-        userService.changeUserPassword(userId, newPassword);
+        userService.updatePassword(userId, newPassword);
     }
 
-    @DeleteMapping("/delete_user")
+    @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteUser(@RequestParam Long userId)
+    void delete(@RequestParam Long userId)
     {
-        userService.deleteUser(userId);
+        userService.delete(userId);
     }
 
 

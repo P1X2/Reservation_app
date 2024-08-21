@@ -4,7 +4,7 @@ GET
 * by id: http://localhost:8080/service/by_id/9
 
 POST
-* add new: http://localhost:8080/service/add_service
+* add new: http://localhost:8080/service/add
 {
     "name": "New Service Name",
     "description": "Description for the new service",
@@ -13,4 +13,4 @@ POST
 }
 
 PUT
-* update price: http://localhost:8080/service/update_service?serviceId=????&newPrice=999
+* update price: http://localhost:8080/service/update?serviceId=????&newPrice=999

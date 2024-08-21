@@ -1,11 +1,9 @@
 package com.example.Reservation_app.Appointments.Appointment;
 
-import com.example.Reservation_app.Reviews.Review.Review;
+
 import com.example.Reservation_app.Services.Service;
 import com.example.Reservation_app.Users.User.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +27,6 @@ public class Appointment {
     @ManyToOne(optional = false)
     // name = "xxx" - references table in DB, not var in service instance (fk's in appointment table)
     @JoinColumn(name = "service_id", nullable = false)
-    @JsonBackReference
     private Service service;
 
     @ManyToOne(optional = false)

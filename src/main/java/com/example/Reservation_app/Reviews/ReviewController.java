@@ -22,7 +22,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/get_by_userId/{userId}")
-    Page<Review> getCommentsByUser(@PathVariable Long userId,
+    Page<Review> getsByUser(@PathVariable Long userId,
                                    @RequestParam(defaultValue = "0") Integer page,
                                    @RequestParam(defaultValue = "2") Integer pageSize,
                                    @RequestParam(defaultValue = "created_at") String sortBy,
@@ -33,7 +33,7 @@ public class ReviewController {
     }
 
     @GetMapping("/get_by_serviceId/{serviceId}")
-    Page<Review> getCommentByService(@PathVariable Long serviceId,
+    Page<Review> getByService(@PathVariable Long serviceId,
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "2") Integer pageSize,
                                      @RequestParam(defaultValue = "created_at") String sortBy,
@@ -45,21 +45,21 @@ public class ReviewController {
 
     @PostMapping("/add_comment_appointment")
     @ResponseStatus(HttpStatus.CREATED)
-    void addComment(@RequestParam Long appointmentId, @RequestBody @Valid ReviewDTO reviewDTO)
+    void addNew(@RequestParam Long appointmentId, @RequestBody @Valid ReviewDTO reviewDTO)
     {
         reviewService.addReview(appointmentId, reviewDTO);
     }
 
-    @PutMapping("/update_review")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void updateCommentRating(@RequestParam Long reviewId, @RequestBody @Valid ReviewDTO reviewDTO)
+    void updateReview(@RequestParam Long reviewId, @RequestBody @Valid ReviewDTO reviewDTO)
     {
         reviewService.updateReview(reviewId, reviewDTO);
     }
 
-    @DeleteMapping("/delete_review")
+    @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteComment(@RequestParam Long reviewId)
+    void delete(@RequestParam Long reviewId)
     {
         reviewService.deleteComment(reviewId);
     }

@@ -34,13 +34,13 @@ public class ServiceController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/add_service")
+    @PostMapping("/add")
     void addService(@RequestBody @Valid Service service){
         serviceService.save(service);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/update_service")
+    @PutMapping("/update")
     void updateServicePrice(
             @RequestParam Long serviceId,
             @RequestParam Integer newPrice)
