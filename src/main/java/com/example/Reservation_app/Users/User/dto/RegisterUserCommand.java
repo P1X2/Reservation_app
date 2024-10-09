@@ -1,11 +1,11 @@
-package com.example.Reservation_app.Users.User;
+package com.example.Reservation_app.Users.User.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 
-public record UserDTO(
+public record RegisterUserCommand(
 
         String username,
+        // @todo validator na dlugosc hasla i znaki spacjalne coby sie posral iz wrazenia
         String password,
         @Email
         String email,
