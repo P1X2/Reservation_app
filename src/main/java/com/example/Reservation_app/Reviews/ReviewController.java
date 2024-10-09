@@ -1,8 +1,7 @@
 package com.example.Reservation_app.Reviews;
 
 import com.example.Reservation_app.Reviews.Review.Review;
-import com.example.Reservation_app.Reviews.Review.ReviewDTO;
-import jakarta.validation.Valid;
+import com.example.Reservation_app.Reviews.Review.dto.AddReviewCommand;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
-// *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status)
+// *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status check)
 
 
 
@@ -47,16 +46,16 @@ public class ReviewController {
 
     @PostMapping("/add_comment_appointment")
     @ResponseStatus(HttpStatus.CREATED)
-    void addNew(@RequestParam Long appointmentId, @RequestBody @Valid ReviewDTO reviewDTO)
+    void addNew(@RequestParam Long appointmentId, @RequestBody @Valid AddReviewCommand addReviewCommand)
     {
-        reviewService.addReview(appointmentId, reviewDTO);
+        reviewService.addReview(appointmentId, addReviewCommand);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void updateReview(@RequestParam Long reviewId, @RequestBody @Valid ReviewDTO reviewDTO)
+    void updateReview(@RequestParam Long reviewId, @RequestBody @Valid AddReviewCommand addReviewCommand)
     {
-        reviewService.updateReview(reviewId, reviewDTO);
+        reviewService.updateReview(reviewId, addReviewCommand);
     }
 
     @DeleteMapping("/delete")

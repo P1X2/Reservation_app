@@ -24,6 +24,7 @@ public class Service {
     private Integer durationMinutes;
     private Integer price;
     private LocalDateTime createdAt;
+    //todo dopiac to do bd
     private LocalDateTime modifiedOn;
 
 }

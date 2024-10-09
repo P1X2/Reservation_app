@@ -3,7 +3,7 @@ package com.example.Reservation_app.Reviews;
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.AppointmentRepository;
 import com.example.Reservation_app.Reviews.Review.Review;
-import com.example.Reservation_app.Reviews.Review.ReviewDTO;
+import com.example.Reservation_app.Reviews.Review.dto.AddReviewCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,24 +25,21 @@ public class ReviewService {
     private final AppointmentRepository appointmentRepository;
 
     Page<Review> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir){
-
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
-
-        return reviewRepository.findByUsername(userId, metadata);
+        return reviewRepository.findByUsername(userId, getPageMetadata(page, pageSize, sortBy, sortDir));
     }
 
     Page<Review> getByServiceId(Long serviceId, Integer page, Integer pageSize, String sortBy, String sortDir){
-//
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
-
-        return reviewRepository.findByService(serviceId, metadata);
+        Page<Review> reviewsPage = reviewRepository.findByService(serviceId, getPageMetadata(page, pageSize, sortBy, sortDir));
+        // todo dodac mapping na dto
     }
 
-    void addReview(Long appointmentId, ReviewDTO reviewDTO){
+    private Pageable getPageMetadata( Integer page, Integer pageSize, String sortBy, String sortDir){
+        Sort sort = Sort.by(sortBy);
+        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+        return  PageRequest.of(page, pageSize, sort);
+    }
+
+    void addReview(Long appointmentId, AddReviewCommand addReviewCommand){
 
         Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentId);
         if (appointmentRecord.isEmpty()){
@@ -50,8 +47,8 @@ public class ReviewService {
         }
 
         Review newReview = new Review();
-        newReview.setReview_content(reviewDTO.review_content());
-        newReview.setRating(reviewDTO.rating());
+        newReview.setReview_content(addReviewCommand.review_content());
+        newReview.setRating(addReviewCommand.rating());
         newReview.setCreated_at(LocalDateTime.now());
         newReview.setAppointment(appointmentRecord.get());
 
@@ -59,7 +56,7 @@ public class ReviewService {
 
     }
 
-    void updateReview(Long reviewId, ReviewDTO reviewDTO){
+    void updateReview(Long reviewId, AddReviewCommand addReviewCommand){
 
         Optional<Review> reviewRecord = reviewRepository.findById(reviewId);
         if(reviewRecord.isEmpty()){
@@ -67,8 +64,8 @@ public class ReviewService {
         }
 
         Review updatedReview = reviewRecord.get();
-        updatedReview.setReview_content(reviewDTO.review_content());
-        updatedReview.setRating(reviewDTO.rating());
+        updatedReview.setReview_content(addReviewCommand.review_content());
+        updatedReview.setRating(addReviewCommand.rating());
 
         reviewRepository.save(updatedReview);
 

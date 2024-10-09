@@ -22,15 +22,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private Long review_id;
+    private Long reviewId;
 
-    @NotEmpty
-    private String review_content;
-    @NotNull
-    @Positive
-    @Max(5)
+    private String reviewContent;
     private Integer rating;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name = "appointment_id", nullable = false)

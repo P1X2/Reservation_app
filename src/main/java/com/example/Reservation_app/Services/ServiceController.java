@@ -3,6 +3,7 @@ package com.example.Reservation_app.Services;
 import com.example.Reservation_app.Services.dto.AddServiceCommand;
 import com.example.Reservation_app.Services.dto.PatchServiceCommand;
 import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,20 +36,20 @@ public class ServiceController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    void addService(@RequestBody AddServiceCommand command){
+    void addService(@RequestBody @Valid AddServiceCommand command){
         serviceService.addNewService(command);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/patch")
-    ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody PatchServiceCommand command){
+    ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody @Valid PatchServiceCommand command){
         return ResponseEntity.ok(serviceService.patchService(command));
     }
 
 
 
 
-//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE ---- jest
+//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE ---- nie do wypierdolenia
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    @DeleteMapping("/delete")
 //    void deleteService(@RequestParam Long serviceId){
