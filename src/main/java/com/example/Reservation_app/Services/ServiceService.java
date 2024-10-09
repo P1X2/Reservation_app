@@ -1,59 +1,69 @@
 package com.example.Reservation_app.Services;
 
+import com.example.Reservation_app.Services.dto.AddServiceCommand;
+import com.example.Reservation_app.Services.dto.PatchServiceCommand;
+import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
+import com.example.Reservation_app.Services.mapper.AddServiceCommandToServiceMapper;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@org.springframework.stereotype.Service
 @AllArgsConstructor
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
+    private final AddServiceCommandToServiceMapper addServiceCommandToServiceMapper;
 
-    Optional<com.example.Reservation_app.Services.Service> findByID(Long serviceId){
-        Optional<com.example.Reservation_app.Services.Service> serviceRecord = serviceRepository.findById(serviceId);
-        if (serviceRecord.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "reason: reason");
-        }
-        return serviceRecord;
+    public Service findById(Long serviceId){
+        return serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    Optional<com.example.Reservation_app.Services.Service> findByName(String name){
+    public Service findByName(String name){
         String capitalized = StringUtils.capitalize(name);
-        Optional<com.example.Reservation_app.Services.Service> serviceRecord = serviceRepository.findByName(capitalized);
-        if (serviceRecord.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return serviceRecord;
+        return serviceRepository.findByName(capitalized)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    List<com.example.Reservation_app.Services.Service> findAll(){
+    List<Service> findAll(){
         return serviceRepository.findAll();
     }
 
-    void save(com.example.Reservation_app.Services.Service service){
-        service.setCreated_at(LocalDateTime.now());
+
+    public void addNewService(AddServiceCommand command){
+
+        Service service = addServiceCommandToServiceMapper.map(command);
+
         serviceRepository.save(service);
     }
 
-    void updatePrice(Long serviceId, Integer newPrice){
+    public PatchServiceResponseDto patchService(PatchServiceCommand command){
+        Service service = findById(command.getServiceId());
 
-        Optional<com.example.Reservation_app.Services.Service> serviceRecord = this.findByID(serviceId);
-        if(serviceRecord.isEmpty()){throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
+        Optional.ofNullable(command.getName()).ifPresent(service::setName);
+        Optional.ofNullable(command.getDescription()).ifPresent(service::setDescription);
+        Optional.ofNullable(command.getDurationMinutes()).ifPresent(service::setDurationMinutes);
+        Optional.ofNullable(command.getPrice()).ifPresent(service::setPrice);
 
-        com.example.Reservation_app.Services.Service updatedService = serviceRecord.get();
-        updatedService.setPrice(newPrice);
-        serviceRepository.save(updatedService);
-    }
+        service.setModifiedOn(LocalDateTime.now());
 
-//    void delete(Long serviceId){
+        serviceRepository.save(service);
+
+        return PatchServiceResponseDto.builder()
+                .name(service.getName())
+                .description(service.getDescription())
+                .durationMinutes(service.getDurationMinutes())
+                .price(service.getPrice())
+                .modifiedOn(service.getModifiedOn())
+                .build();
+}
+
 //        serviceRepository.deleteById(serviceId);
 //    }
 

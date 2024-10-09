@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.example.Reservation_app.Users.User.dto.RegisterUserCommand;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +49,7 @@ public class UserService {
     public PatchUserResponseDto patchUser(PatchUserCommand command){
         User user = getById(command.getUserId());
 
+        // todo move to patch calss
         Optional.ofNullable(command.getUsername()).ifPresent(user::setUsername);
         Optional.ofNullable(command.getPassword()).ifPresent(user::setPassword);
         Optional.ofNullable(command.getEmail()).ifPresent(user::setEmail);

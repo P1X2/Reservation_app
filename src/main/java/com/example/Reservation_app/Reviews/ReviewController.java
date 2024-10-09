@@ -21,6 +21,8 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+
+    // todo do not return entity xdd
     @GetMapping("/get_by_userId/{userId}")
     Page<Review> getsByUser(@PathVariable Long userId,
                                    @RequestParam(defaultValue = "0") Integer page,
@@ -31,7 +33,7 @@ public class ReviewController {
     {
         return reviewService.getByUserId(userId, page, pageSize, sortBy, sortDir);
     }
-
+    // todo do not return entity xdd
     @GetMapping("/get_by_serviceId/{serviceId}")
     Page<Review> getByService(@PathVariable Long serviceId,
                                      @RequestParam(defaultValue = "0") Integer page,

@@ -5,6 +5,7 @@ import com.example.Reservation_app.Appointments.Appointment.AppointmentDTO;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
 import com.example.Reservation_app.Reviews.ReviewRepository;
 import com.example.Reservation_app.Services.ServiceRepository;
+import com.example.Reservation_app.Services.Service;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
-@Service
+@org.springframework.stereotype.Service
 @AllArgsConstructor
 public class AppointmentService {
 
@@ -62,7 +62,7 @@ public class AppointmentService {
 
         Optional<User> client = userRepository.findById(appointmentDTO.clientId());
         Optional<User> employee = userRepository.findById(appointmentDTO.employeeId());
-        Optional<com.example.Reservation_app.Services.Service> service = serviceRepository.findById(appointmentDTO.serviceId());
+        Optional<Service> service = serviceRepository.findById(appointmentDTO.serviceId());
 
         if (client.isEmpty() || employee.isEmpty() || service.isEmpty()){
 

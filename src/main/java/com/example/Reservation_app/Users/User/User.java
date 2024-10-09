@@ -38,6 +38,7 @@ public class User {
 
 
     private LocalDateTime createdAt;
+    //todo dopiac to do bd
     private LocalDateTime modifiedOn;
 
 }

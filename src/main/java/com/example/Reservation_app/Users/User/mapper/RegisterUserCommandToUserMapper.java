@@ -11,14 +11,15 @@ public class RegisterUserCommandToUserMapper {
 
     public User map(RegisterUserCommand registerUserCommand){
         return User.builder()
-                .name(registerUserCommand.name())
-                .surname(registerUserCommand.surname())
-                .password(registerUserCommand.password())
-                .username(registerUserCommand.username())
-                .email(registerUserCommand.email())
+                .name(registerUserCommand.getName())
+                .surname(registerUserCommand.getSurname())
+                .password(registerUserCommand.getPassword())
+                .username(registerUserCommand.getPassword())
+                .email(registerUserCommand.getEmail())
                 .userStatus(UserStatus.ACTIVE)
                 .role(UserRole.CLIENT)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
+
 }

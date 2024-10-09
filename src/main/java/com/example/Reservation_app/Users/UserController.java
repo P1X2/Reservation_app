@@ -27,24 +27,24 @@ public class UserController {
     }
 // @ todo to kazdy siebie
     @PatchMapping("/patch-user-data")
-    public ResponseEntity<PatchUserResponseDto> patchUser(@RequestBody PatchUserCommand command){
+    public ResponseEntity<PatchUserResponseDto> patchUser(@RequestBody @Valid PatchUserCommand command){
         return ResponseEntity.ok(userService.patchUser(command));
     }
 
     // @ todo to tylko admin
-    @PatchMapping("/patch-user-role")
+    @PatchMapping("/patch-role")
     @ResponseStatus(HttpStatus.OK)
-    public void patchUserRole(@RequestBody PatchUserRoleCommand command){
+    public void patchUserRole(@RequestBody @Valid PatchUserRoleCommand command){
         userService.patchUserRole(command);
     }
 
     //@ todo to admin + robol , ale robol z mniejszymi prawami
-    @PatchMapping("/patch-user-status")
-    public void patchUserStatus(@RequestBody PatchUserStatusCommand command){
+    @PatchMapping("/patch-status")
+    public void patchUserStatus(@RequestBody @Valid PatchUserStatusCommand command){
         userService.patchUserStatus(command);
     }
 
-    @DeleteMapping("/delete-user")
+    @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@RequestParam Long userId) {
         userService.delete(userId);

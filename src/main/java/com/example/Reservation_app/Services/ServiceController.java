@@ -1,14 +1,14 @@
 package com.example.Reservation_app.Services;
 
-import jakarta.validation.Valid;
+import com.example.Reservation_app.Services.dto.AddServiceCommand;
+import com.example.Reservation_app.Services.dto.PatchServiceCommand;
+import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/service")
@@ -19,35 +19,36 @@ public class ServiceController {
 
     //TODO tu zrobić paginację
     @GetMapping("/all")
-    List<com.example.Reservation_app.Services.Service> getAllServices(){
+    List<Service> getAllServices(){
         return serviceService.findAll();
     }
 
     @GetMapping("/by_id/{serviceId}")
-    Optional<com.example.Reservation_app.Services.Service> getServiceByID(@PathVariable Long serviceId){
-        return serviceService.findByID(serviceId);
+    Service getServiceByID(@PathVariable Long serviceId){
+        return serviceService.findById(serviceId);
     }
 
     @GetMapping("/by_name/{name}")
-    Optional<com.example.Reservation_app.Services.Service> getServiceByName(@PathVariable String name){
+    Service getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add")
-    void addService(@RequestBody @Valid Service service){
-        serviceService.save(service);
+    @ResponseStatus(HttpStatus.OK)
+    void addService(@RequestBody AddServiceCommand command){
+        serviceService.addNewService(command);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/update")
-    void updateServicePrice(
-            @RequestParam Long serviceId,
-            @RequestParam Integer newPrice)
-    {
-        serviceService.updatePrice(serviceId, newPrice);
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/patch")
+    ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody PatchServiceCommand command){
+        return ResponseEntity.ok(serviceService.patchService(command));
     }
-//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE
+
+
+
+
+//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE ---- jest
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    @DeleteMapping("/delete")
 //    void deleteService(@RequestParam Long serviceId){
