@@ -1,116 +1,84 @@
 package com.example.Reservation_app.Appointments;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
+import com.example.Reservation_app.Appointments.Appointment.command.CreateAppointmentCommand;
+import com.example.Reservation_app.Appointments.Appointment.dto.CreateAppointmentResponseDto;
 import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDto;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
+import com.example.Reservation_app.Appointments.Appointment.mapper.AppointmentToCreateAppointmentResponseDtoMapper;
+import com.example.Reservation_app.Appointments.Appointment.mapper.AppointmentToGetAppoinmentDtoMapper;
+import com.example.Reservation_app.Appointments.Appointment.mapper.CreateAppointmentCommandToAppointmentDtoMapper;
 import com.example.Reservation_app.Reviews.ReviewRepository;
-import com.example.Reservation_app.Services.ServiceRepository;
-import com.example.Reservation_app.Services.Service.Service;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.UserRepository;
-import lombok.AllArgsConstructor;
+import com.example.Reservation_app.Utils.ReservationAppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Optional;
 
 @org.springframework.stereotype.Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
-    private final ServiceRepository serviceRepository;
     private final ReviewRepository reviewRepository;
+    private final AppointmentToGetAppoinmentDtoMapper appointmentToGetAppoinmentDtoMapper;
+    private final CreateAppointmentCommandToAppointmentDtoMapper createAppointmentCommandToAppointmentDtoMapper;
+    private final AppointmentToCreateAppointmentResponseDtoMapper createAppointmentResponseDtoMapper;
 
 
-    Page<Appointment> getByDate(LocalDate date, Integer page, Integer pageSize, String sortBy, String sortDir)
+    public Page<GetAppointmentDto> getByDate(LocalDate date, Integer page, Integer pageSize, String sortBy, String sortDir)
     {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(LocalTime.MAX);
 
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
-
-        return appointmentRepository.findAllByDate(start, end, metadata);
+        return appointmentRepository.findAllByDate(start, end, ReservationAppUtils.getPageMetadata(page, pageSize, sortBy, sortDir))
+                .map(appointmentToGetAppoinmentDtoMapper::map);
     }
 
     //TODO TEST
-    Page<Appointment> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir)
+    public Page<GetAppointmentDto> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir)
     {
-        User client = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User client = userRepository.findById(userId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-
-        Pageable metadata = PageRequest.of(page, pageSize, sort);
-
-        return appointmentRepository.findByClient(client, metadata);
+        return appointmentRepository.findByClient(client, ReservationAppUtils.getPageMetadata(page, pageSize, sortBy, sortDir))
+                .map(appointmentToGetAppoinmentDtoMapper::map);
     }
 
+    CreateAppointmentResponseDto create(CreateAppointmentCommand createAppointmentCommand){
+        Appointment appointment = createAppointmentCommandToAppointmentDtoMapper.map(createAppointmentCommand);
+        appointmentRepository.save(appointment);
 
-    void addNew(GetAppointmentDto getAppointmentDto){
-
-        Optional<User> client = userRepository.findById(getAppointmentDto.clientId());
-        Optional<User> employee = userRepository.findById(getAppointmentDto.employeeId());
-        Optional<Service> service = serviceRepository.findById(getAppointmentDto.serviceId());
-
-        if (client.isEmpty() || employee.isEmpty() || service.isEmpty()){
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid clientId, employeeID or serviceId");
-
-        }
-
-        Appointment newAppointment = new Appointment();
-        newAppointment.setService(service.get());
-        newAppointment.setClient(client.get());
-        newAppointment.setEmployee(employee.get());
-        newAppointment.setAppointment_date(getAppointmentDto.appointmentDate());
-        newAppointment.setStatus(AppointmentStatus.PENDING_PAYMENT);
-
-        appointmentRepository.save(newAppointment);
+        return createAppointmentResponseDtoMapper.map(appointment);
 
     }
 
     void updateStatus(Long appointmentId, AppointmentStatus newStatus)
     {
-        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentId);
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if(appointmentRecord.isEmpty())
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        Appointment appointment = appointmentRecord.get();
         appointment.setStatus(newStatus);
-
         appointmentRepository.save(appointment);
 
     }
 
-    public void delete(Long appointmentID)
+    public void delete(Long appointmentId)
     {
-        Optional<Appointment> appointmentRecord = appointmentRepository.findById(appointmentID);
-        if (appointmentRecord.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Appointment appointment = appointmentRecord.get();
-        Optional<Long> bandedReview = appointmentRepository.findReviewsToDelete(appointment.getAppointment_id());
+        Long bandedReviewId = appointmentRepository.findReviewIdToDelete(appointment.getAppointmentId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if(bandedReview.isPresent()){
-            reviewRepository.deleteById(bandedReview.get());
-        }
-
+        reviewRepository.deleteById(bandedReviewId);
         appointmentRepository.delete(appointment);
     }
 

@@ -1,7 +1,6 @@
 package com.example.Reservation_app.Appointments;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
-import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Users.User.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +26,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             "FROM APPOINTMENT A " +
             "JOIN REVIEW R USING (APPOINTMENT_ID) " +
             "WHERE (A.APPOINTMENT_ID = :appointmentId)", nativeQuery = true)
-    Optional<Long> findReviewsToDelete(@Param("appointmentId") Long appointmentId);
+    Optional<Long> findReviewIdToDelete(@Param("appointmentId") Long appointmentId);
 
     // delete user method
     List<Appointment> findByClient(User client);

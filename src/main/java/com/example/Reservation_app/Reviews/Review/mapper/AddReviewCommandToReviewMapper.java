@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Component
 public class AddReviewCommandToReviewMapper {
 
-    public Review map(AddReviewCommand addReviewCommand){
+    public Review map(AddReviewCommand command){
         return Review.builder()
-                .reviewContent(addReviewCommand.getReviewContent())
-                .rating(addReviewCommand.getRating())
+                .reviewContent(command.getReviewContent())
+                .rating(command.getRating())
                 .createdAt(LocalDateTime.now())
                 .build();
     }

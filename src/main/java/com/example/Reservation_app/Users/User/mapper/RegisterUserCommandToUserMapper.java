@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Component
 public class RegisterUserCommandToUserMapper {
 
-    public User map(RegisterUserCommand registerUserCommand){
+    public User map(RegisterUserCommand command){
         return User.builder()
-                .name(registerUserCommand.getName())
-                .surname(registerUserCommand.getSurname())
-                .password(registerUserCommand.getPassword())
-                .username(registerUserCommand.getPassword())
-                .email(registerUserCommand.getEmail())
+                .name(command.getName())
+                .surname(command.getSurname())
+                .password(command.getPassword())
+                .username(command.getPassword())
+                .email(command.getEmail())
                 .userStatus(UserStatus.ACTIVE)
                 .role(UserRole.CLIENT)
                 .createdAt(LocalDateTime.now())

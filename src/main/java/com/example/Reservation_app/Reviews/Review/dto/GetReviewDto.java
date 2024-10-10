@@ -21,5 +21,5 @@ public class GetReviewDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedOn;
 
-    private Long appointmentId;
+    private GetAppointmentDto appointment;
 }

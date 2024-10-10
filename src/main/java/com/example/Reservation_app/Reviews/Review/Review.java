@@ -29,6 +29,7 @@ public class Review {
     private String reviewContent;
     private Integer rating;
     private LocalDateTime createdAt;
+    //todo add to db
     private LocalDateTime modifiedOn;
 
     @OneToOne

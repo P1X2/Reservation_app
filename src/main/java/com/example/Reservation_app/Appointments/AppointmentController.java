@@ -1,6 +1,7 @@
 package com.example.Reservation_app.Appointments;
 
-import com.example.Reservation_app.Appointments.Appointment.Appointment;
+import com.example.Reservation_app.Appointments.Appointment.command.CreateAppointmentCommand;
+import com.example.Reservation_app.Appointments.Appointment.dto.CreateAppointmentResponseDto;
 import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDto;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
 import jakarta.validation.Valid;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,9 +27,10 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    @GetMapping("/get_for_date/{date}")
-    Page<Appointment> getAppointmentsByDate(
-            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
+//todo menago + robol
+    @GetMapping("/get-by-date")
+    Page<GetAppointmentDto> getAppointmentsByDate(
+            @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "2") Integer pageSize,
             @RequestParam(defaultValue = "appointment_date") String sortBy,
@@ -37,9 +40,10 @@ public class AppointmentController {
         return appointmentService.getByDate(date, page, pageSize, sortBy, sortDir);
     }
 
-    @GetMapping("/get_by_userId")
-    Page<Appointment> getAppointmentsByUserId(
-            @RequestParam Long userId,
+    //todo wszyscy
+    @GetMapping("/get-by-userId/{userId}")
+    Page<GetAppointmentDto> getAppointmentsByUserId(
+            @PathVariable Long userId,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "2") Integer pageSize,
             @RequestParam(defaultValue = "appointment_date") String sortBy,
@@ -49,20 +53,17 @@ public class AppointmentController {
         return appointmentService.getByUserId(userId, page, pageSize, sortBy, sortDir);
     }
 
-
-
-
-    @PostMapping("/create_new")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    void createNewAppointment(@Valid @RequestBody GetAppointmentDto getAppointmentDto)
+    ResponseEntity<CreateAppointmentResponseDto> createNewAppointment(@Valid @RequestBody CreateAppointmentCommand createAppointmentCommand)
     {
-        appointmentService.addNew(getAppointmentDto);
+       return ResponseEntity.ok(appointmentService.create(createAppointmentCommand));
     }
 
-    @PutMapping("/update_status")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/update-status/{appointmentId}")
+    @ResponseStatus(HttpStatus.OK)
     void updateAppointmentStatus(
-            @RequestParam Long appointmentId,
+            @PathVariable Long appointmentId,
             @RequestParam AppointmentStatus newStatus
             )
     {
@@ -70,7 +71,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     void deleteAppointment(@RequestParam Long appointmentId)
     {
         appointmentService.delete(appointmentId);

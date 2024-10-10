@@ -1,5 +1,6 @@
 package com.example.Reservation_app.Reviews.Review.dto;
 
+import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,5 +16,5 @@ public class PatchReviewResponseDto {
     private Integer rating;
     private LocalDateTime modifiedOn;
 
-    private Long appointmentId;
+    private GetAppointmentDto appointment;
 }

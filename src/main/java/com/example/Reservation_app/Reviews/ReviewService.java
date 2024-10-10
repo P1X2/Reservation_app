@@ -8,11 +8,9 @@ import com.example.Reservation_app.Reviews.Review.dto.PatchReviewResponseDto;
 import com.example.Reservation_app.Reviews.Review.mapper.AddReviewCommandToReviewMapper;
 import com.example.Reservation_app.Reviews.Review.mapper.ReviewToGetReviewDtoMapper;
 import com.example.Reservation_app.Reviews.Review.mapper.ReviewToPatchReviewResponseDtoMapper;
+import com.example.Reservation_app.Utils.ReservationAppUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,20 +30,13 @@ public class ReviewService {
     private final ReviewToPatchReviewResponseDtoMapper reviewToPatchReviewResponseDtoMapper;
 
     Page<GetReviewDto> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir){
-        return reviewRepository.findByUsername(userId, getPageMetadata(page, pageSize, sortBy, sortDir))
+        return reviewRepository.findByUsername(userId, ReservationAppUtils.getPageMetadata(page, pageSize, sortBy, sortDir))
                 .map(reviewToGetReviewDtoMapper::map);
     }
 
     Page<GetReviewDto> getByServiceId(Long serviceId, Integer page, Integer pageSize, String sortBy, String sortDir){
-        return reviewRepository.findByService(serviceId, getPageMetadata(page, pageSize, sortBy, sortDir))
+        return reviewRepository.findByService(serviceId, ReservationAppUtils.getPageMetadata(page, pageSize, sortBy, sortDir))
                 .map(reviewToGetReviewDtoMapper::map);
-        // todo dodac mapping na dto
-    }
-
-    private Pageable getPageMetadata( Integer page, Integer pageSize, String sortBy, String sortDir){
-        Sort sort = Sort.by(sortBy);
-        sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-        return  PageRequest.of(page, pageSize, sort);
     }
 
     void addReview(Long appointmentId, AddReviewCommand addReviewCommand){
