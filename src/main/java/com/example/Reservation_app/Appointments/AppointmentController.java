@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-//todo endpoint do oplacania dla usera
-// end dla pracownikow do potwierdzania
-// WSPOLNY END  DO CANCELOWANIA
+//todo endpoi
 // AUTOMATYCZNY SERVICE DO ZMIANY STANU APP JESLI DATA W DB < NOW()
-// get all app by user_id
 
 @RestController
 @AllArgsConstructor

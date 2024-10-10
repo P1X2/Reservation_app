@@ -1,3 +1,4 @@
 1. AppointmentService - alg do wyboru wolnego robola
 2. pododawac modified_on i created on to db;; wsm to zrobic bd
 3. paginacja w get all service + dto
+4. validator do hasla zebys sie zesrali
