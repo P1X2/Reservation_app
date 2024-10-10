@@ -1,8 +1,8 @@
-package com.example.Reservation_app.Services.mapper;
+package com.example.Reservation_app.Services.Service.mapper;
 
 
-import com.example.Reservation_app.Services.Service;
-import com.example.Reservation_app.Services.command.AddServiceCommand;
+import com.example.Reservation_app.Services.Service.Service;
+import com.example.Reservation_app.Services.Service.command.AddServiceCommand;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

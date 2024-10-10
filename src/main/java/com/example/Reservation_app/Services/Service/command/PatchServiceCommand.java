@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Services.command;
+package com.example.Reservation_app.Services.Service.command;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

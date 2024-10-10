@@ -1,7 +1,6 @@
-package com.example.Reservation_app.Users.User.dto;
+package com.example.Reservation_app.Users.User.command;
 
-
-import com.example.Reservation_app.Users.User.UserStatus;
+import com.example.Reservation_app.Users.User.UserRole;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +9,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class PatchUserStatusCommand {
+@Getter
+public class PatchUserRoleCommand {
     @NotNull
     Long userId;
     @NotNull
-    UserStatus userStatus;
+    UserRole userRole;
 }

@@ -3,10 +3,12 @@ package com.example.Reservation_app.Reviews;
 import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Reviews.Review.command.AddReviewCommand;
 import com.example.Reservation_app.Reviews.Review.dto.GetReviewDto;
+import com.example.Reservation_app.Reviews.Review.dto.PatchReviewResponseDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
@@ -53,8 +55,8 @@ public class ReviewController {
 
     @PatchMapping("/patch")
     @ResponseStatus(HttpStatus.OK)
-    void patchReview(@RequestParam Long reviewId, @RequestBody @Valid AddReviewCommand addReviewCommand) {
-        reviewService.patchReview(reviewId, addReviewCommand);
+    ResponseEntity<PatchReviewResponseDto> patchReview(@RequestParam Long reviewId, @RequestBody @Valid AddReviewCommand addReviewCommand) {
+        return ResponseEntity.ok(reviewService.patchReview(reviewId, addReviewCommand));
     }
 
     @DeleteMapping("/delete")

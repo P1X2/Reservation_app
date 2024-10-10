@@ -5,7 +5,7 @@ import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDt
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
 import com.example.Reservation_app.Reviews.ReviewRepository;
 import com.example.Reservation_app.Services.ServiceRepository;
-import com.example.Reservation_app.Services.Service;
+import com.example.Reservation_app.Services.Service.Service;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.UserRepository;
 import lombok.AllArgsConstructor;

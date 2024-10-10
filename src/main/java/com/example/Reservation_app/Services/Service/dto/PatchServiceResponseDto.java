@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Services.dto;
+package com.example.Reservation_app.Services.Service.dto;
 
 
 import lombok.*;

@@ -4,9 +4,10 @@ import com.example.Reservation_app.Appointments.AppointmentService;
 import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Reviews.Review.command.AddReviewCommand;
 import com.example.Reservation_app.Reviews.Review.dto.GetReviewDto;
+import com.example.Reservation_app.Reviews.Review.dto.PatchReviewResponseDto;
 import com.example.Reservation_app.Reviews.Review.mapper.AddReviewCommandToReviewMapper;
 import com.example.Reservation_app.Reviews.Review.mapper.ReviewToGetReviewDtoMapper;
-import lombok.AllArgsConstructor;
+import com.example.Reservation_app.Reviews.Review.mapper.ReviewToPatchReviewResponseDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,7 @@ public class ReviewService {
     private final AppointmentService appointmentService;
     private final AddReviewCommandToReviewMapper addReviewCommandToReviewMapper;
     private final ReviewToGetReviewDtoMapper reviewToGetReviewDtoMapper;
+    private final ReviewToPatchReviewResponseDtoMapper reviewToPatchReviewResponseDtoMapper;
 
     Page<GetReviewDto> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir){
         return reviewRepository.findByUsername(userId, getPageMetadata(page, pageSize, sortBy, sortDir))
@@ -54,7 +56,7 @@ public class ReviewService {
         reviewRepository.save(newReview);
     }
 
-    void patchReview(Long reviewId, AddReviewCommand addReviewCommand){
+    PatchReviewResponseDto patchReview(Long reviewId, AddReviewCommand addReviewCommand){
         Review reviewRecord = getByReviewId(reviewId);
 
         Optional.ofNullable(addReviewCommand.getReviewContent()).ifPresent(reviewRecord::setReviewContent);
@@ -62,6 +64,8 @@ public class ReviewService {
         reviewRecord.setModifiedOn(LocalDateTime.now());
 
         reviewRepository.save(reviewRecord);
+
+        return reviewToPatchReviewResponseDtoMapper.map(reviewRecord);
     }
 
     void deleteComment(Long reviewId){

@@ -1,4 +1,4 @@
-package com.example.Reservation_app.Users.User.dto;
+package com.example.Reservation_app.Users.User.command;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

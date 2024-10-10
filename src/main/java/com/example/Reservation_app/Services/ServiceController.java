@@ -1,8 +1,10 @@
 package com.example.Reservation_app.Services;
 
-import com.example.Reservation_app.Services.command.AddServiceCommand;
-import com.example.Reservation_app.Services.command.PatchServiceCommand;
-import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
+import com.example.Reservation_app.Services.Service.Service;
+import com.example.Reservation_app.Services.Service.command.AddServiceCommand;
+import com.example.Reservation_app.Services.Service.command.PatchServiceCommand;
+import com.example.Reservation_app.Services.Service.dto.GetServiceDto;
+import com.example.Reservation_app.Services.Service.dto.PatchServiceResponseDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,12 +27,12 @@ public class ServiceController {
     }
 
     @GetMapping("/by_id/{serviceId}")
-    Service getServiceByID(@PathVariable Long serviceId){
+    GetServiceDto getServiceByID(@PathVariable Long serviceId){
         return serviceService.findById(serviceId);
     }
 
     @GetMapping("/by_name/{name}")
-    Service getServiceByName(@PathVariable String name){
+    GetServiceDto getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }
 

@@ -6,12 +6,14 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class PatchUserResponseDto {
+public class GetUserDto {
+
+    private Long userId;
 
     private String username;
     private String password;
@@ -22,6 +24,8 @@ public class PatchUserResponseDto {
     private UserStatus userStatus;
     private UserRole role;
 
+
+    private LocalDateTime createdAt;
     private LocalDateTime modifiedOn;
 
 }

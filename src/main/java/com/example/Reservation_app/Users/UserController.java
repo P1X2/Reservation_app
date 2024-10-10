@@ -1,5 +1,9 @@
 package com.example.Reservation_app.Users;
 
+import com.example.Reservation_app.Users.User.command.PatchUserCommand;
+import com.example.Reservation_app.Users.User.command.PatchUserRoleCommand;
+import com.example.Reservation_app.Users.User.command.PatchUserStatusCommand;
+import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
 import com.example.Reservation_app.Users.User.dto.*;
 import com.example.Reservation_app.Users.User.User;
 import jakarta.validation.Valid;
@@ -17,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/get_by_id")
-    User getById(@RequestParam Long userId) {
+    GetUserDto getById(@RequestParam Long userId) {
         return userService.getById(userId);
     }
 

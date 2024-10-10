@@ -1,7 +1,7 @@
 package com.example.Reservation_app.Appointments.Appointment;
 
 
-import com.example.Reservation_app.Services.Service;
+import com.example.Reservation_app.Services.Service.Service;
 import com.example.Reservation_app.Users.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

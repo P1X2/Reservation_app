@@ -1,9 +1,13 @@
 package com.example.Reservation_app.Services;
 
-import com.example.Reservation_app.Services.command.AddServiceCommand;
-import com.example.Reservation_app.Services.command.PatchServiceCommand;
-import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
-import com.example.Reservation_app.Services.mapper.AddServiceCommandToServiceMapper;
+import com.example.Reservation_app.Services.Service.Service;
+import com.example.Reservation_app.Services.Service.command.AddServiceCommand;
+import com.example.Reservation_app.Services.Service.command.PatchServiceCommand;
+import com.example.Reservation_app.Services.Service.dto.GetServiceDto;
+import com.example.Reservation_app.Services.Service.dto.PatchServiceResponseDto;
+import com.example.Reservation_app.Services.Service.mapper.AddServiceCommandToServiceMapper;
+import com.example.Reservation_app.Services.Service.mapper.ServiceToGetServiceDtoMapper;
+import com.example.Reservation_app.Services.Service.mapper.ServiceToPatchServiceResponseDto;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -19,15 +23,19 @@ public class ServiceService {
 
     private final ServiceRepository serviceRepository;
     private final AddServiceCommandToServiceMapper addServiceCommandToServiceMapper;
+    private final ServiceToGetServiceDtoMapper serviceToGetServiceDtoMapper;
+    private final ServiceToPatchServiceResponseDto serviceToPatchServiceResponseDto;
 
-    public Service findById(Long serviceId){
+    public GetServiceDto findById(Long serviceId){
         return serviceRepository.findById(serviceId)
+                .map(serviceToGetServiceDtoMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public Service findByName(String name){
+    public GetServiceDto findByName(String name){
         String capitalized = StringUtils.capitalize(name);
         return serviceRepository.findByName(capitalized)
+                .map(serviceToGetServiceDtoMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -39,12 +47,12 @@ public class ServiceService {
     public void addNewService(AddServiceCommand command){
 
         Service service = addServiceCommandToServiceMapper.map(command);
-
         serviceRepository.save(service);
     }
 
     public PatchServiceResponseDto patchService(PatchServiceCommand command){
-        Service service = findById(command.getServiceId());
+        Service service = serviceRepository.findById(command.getServiceId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Optional.ofNullable(command.getName()).ifPresent(service::setName);
         Optional.ofNullable(command.getDescription()).ifPresent(service::setDescription);
@@ -55,13 +63,7 @@ public class ServiceService {
 
         serviceRepository.save(service);
 
-        return PatchServiceResponseDto.builder()
-                .name(service.getName())
-                .description(service.getDescription())
-                .durationMinutes(service.getDurationMinutes())
-                .price(service.getPrice())
-                .modifiedOn(service.getModifiedOn())
-                .build();
+        return serviceToPatchServiceResponseDto.map(service);
 }
 
 //        serviceRepository.deleteById(serviceId);
