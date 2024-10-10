@@ -4,21 +4,22 @@ package com.example.Reservation_app.Appointments.Appointment;
 import com.example.Reservation_app.Services.Service.Service;
 import com.example.Reservation_app.Users.User.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "appointment_id")
-    private Long appointment_id;
+    private Long appointmentId;
 
     private LocalDateTime appointmentDate;
     //todo add to db

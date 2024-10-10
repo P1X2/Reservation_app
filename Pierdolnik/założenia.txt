@@ -1,0 +1,36 @@
+Założenia:
+1. Apk dla pojedynczego salonu 
+2. Każdy pracownik jest w stanie wykonać każdą usługę
+2. 3 role - bankomat + podnóżek + prezes
+3. Logowanie + Rejestracja jwt
+
+Funkcjonalności:
+
+--- Użytkownik --- 
+1. Rezerwacja wizyt 
+2. Wystawianie komentarzy 
+3. Płacenie za wizyty [?]
+4. Odwoływanie wizyt 
+
+--- Pracownik [prezes] --- 
+1. Dodawanie innych pracowników
+2. Dodawanie usług
+3. Wszystko to co podnożek 
+
+--- Pracownik [podnożek]
+1. Odwoływanie/potwierdzanie wizyt 
+2. Banowanie klientów
+3. Usuwanie komentarzy 
+
+--- Inne --- [Paginacja]
+1. Wyświetlanie dostępnych usług
+2. Wyświetlanie komentarzy do danej usługi
+3. Wyświetlane wszystkich umówionych wizyt/ wizyt na dany dzień
+
+
+Inne:
+1. Przy próbie wystawienia opinii sprawdzane będzie czy użytkownik o danym user_id w przeciągu ostatniego tygodnia korzystał z danej usługi.
+2. Wizyta potwierdzona przez pracownika
+3. [Pracownik] - przy potwierdzaniu wizyty trzeba wskazać pracownika, który jest wolny w danym przedziale czasowym
+4. [Może] Jakieś sortowanie wyników/edycja komentarzy
+

@@ -3,11 +3,10 @@ package com.example.Reservation_app.Services.Service.command;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PatchServiceCommand {
     @NotNull
     private Long serviceId;
