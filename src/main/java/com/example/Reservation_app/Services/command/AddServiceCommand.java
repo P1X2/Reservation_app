@@ -1,22 +1,21 @@
-package com.example.Reservation_app.Services.dto;
+package com.example.Reservation_app.Services.command;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
-public class PatchServiceCommand {
-    @NotNull
-    private Long serviceId;
-
+public class AddServiceCommand {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @NotNull
     private Integer durationMinutes;
+    @NotNull
     private Integer price;
-
 }

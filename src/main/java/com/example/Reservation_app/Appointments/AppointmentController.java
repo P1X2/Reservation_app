@@ -1,7 +1,7 @@
 package com.example.Reservation_app.Appointments;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
-import com.example.Reservation_app.Appointments.Appointment.AppointmentDTO;
+import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDto;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -54,9 +54,9 @@ public class AppointmentController {
 
     @PostMapping("/create_new")
     @ResponseStatus(HttpStatus.CREATED)
-    void createNewAppointment(@Valid @RequestBody AppointmentDTO appointmentDTO)
+    void createNewAppointment(@Valid @RequestBody GetAppointmentDto getAppointmentDto)
     {
-        appointmentService.addNew(appointmentDTO);
+        appointmentService.addNew(getAppointmentDto);
     }
 
     @PutMapping("/update_status")

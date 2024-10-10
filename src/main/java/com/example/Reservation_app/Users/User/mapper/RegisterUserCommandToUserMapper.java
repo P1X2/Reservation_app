@@ -4,9 +4,11 @@ import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.UserRole;
 import com.example.Reservation_app.Users.User.UserStatus;
 import com.example.Reservation_app.Users.User.dto.RegisterUserCommand;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Component
 public class RegisterUserCommandToUserMapper {
 
     public User map(RegisterUserCommand registerUserCommand){

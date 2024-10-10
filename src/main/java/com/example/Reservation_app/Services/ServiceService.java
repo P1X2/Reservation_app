@@ -1,7 +1,7 @@
 package com.example.Reservation_app.Services;
 
-import com.example.Reservation_app.Services.dto.AddServiceCommand;
-import com.example.Reservation_app.Services.dto.PatchServiceCommand;
+import com.example.Reservation_app.Services.command.AddServiceCommand;
+import com.example.Reservation_app.Services.command.PatchServiceCommand;
 import com.example.Reservation_app.Services.dto.PatchServiceResponseDto;
 import com.example.Reservation_app.Services.mapper.AddServiceCommandToServiceMapper;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.Reservation_app.Appointments;
 
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
-import com.example.Reservation_app.Appointments.Appointment.AppointmentDTO;
+import com.example.Reservation_app.Appointments.Appointment.dto.GetAppointmentDto;
 import com.example.Reservation_app.Appointments.Appointment.AppointmentStatus;
 import com.example.Reservation_app.Reviews.ReviewRepository;
 import com.example.Reservation_app.Services.ServiceRepository;
@@ -58,11 +58,11 @@ public class AppointmentService {
     }
 
 
-    void addNew(AppointmentDTO appointmentDTO){
+    void addNew(GetAppointmentDto getAppointmentDto){
 
-        Optional<User> client = userRepository.findById(appointmentDTO.clientId());
-        Optional<User> employee = userRepository.findById(appointmentDTO.employeeId());
-        Optional<Service> service = serviceRepository.findById(appointmentDTO.serviceId());
+        Optional<User> client = userRepository.findById(getAppointmentDto.clientId());
+        Optional<User> employee = userRepository.findById(getAppointmentDto.employeeId());
+        Optional<Service> service = serviceRepository.findById(getAppointmentDto.serviceId());
 
         if (client.isEmpty() || employee.isEmpty() || service.isEmpty()){
 
@@ -74,7 +74,7 @@ public class AppointmentService {
         newAppointment.setService(service.get());
         newAppointment.setClient(client.get());
         newAppointment.setEmployee(employee.get());
-        newAppointment.setAppointment_date(appointmentDTO.appointmentDate());
+        newAppointment.setAppointment_date(getAppointmentDto.appointmentDate());
         newAppointment.setStatus(AppointmentStatus.PENDING_PAYMENT);
 
         appointmentRepository.save(newAppointment);
@@ -114,5 +114,9 @@ public class AppointmentService {
         appointmentRepository.delete(appointment);
     }
 
+    public Appointment getAppointmentById(Long appointmentId){
+        return appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
 }

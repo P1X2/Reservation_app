@@ -1,13 +1,16 @@
-package com.example.Reservation_app.Reviews.Review.dto;
+package com.example.Reservation_app.Reviews.Review.command;
 
 
 import jakarta.validation.constraints.*;
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddReviewCommand {
-        @NotEmpty
         String reviewContent;
         @NotNull
-        @Positive
         @Max(5)
         @Min(1)
         Integer rating;

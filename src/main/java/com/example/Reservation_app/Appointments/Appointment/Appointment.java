@@ -20,8 +20,13 @@ public class Appointment {
     @Column(name = "appointment_id")
     private Long appointment_id;
 
-    private LocalDateTime appointment_date;
-    @Enumerated(EnumType.STRING) // defaultowo zaciąga do ordinala (int)
+    private LocalDateTime appointmentDate;
+    //todo add to db
+    private LocalDateTime createdAt;
+    //todo add to db
+    private LocalDateTime modifiedOn;
+
+    @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
     @ManyToOne(optional = false)
