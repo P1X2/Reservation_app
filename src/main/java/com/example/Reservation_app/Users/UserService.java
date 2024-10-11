@@ -3,9 +3,7 @@ package com.example.Reservation_app.Users;
 import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.AppointmentRepository;
 import com.example.Reservation_app.Appointments.AppointmentService;
-import com.example.Reservation_app.Users.User.command.PatchUserCommand;
-import com.example.Reservation_app.Users.User.command.PatchUserRoleCommand;
-import com.example.Reservation_app.Users.User.command.PatchUserStatusCommand;
+import com.example.Reservation_app.Users.User.command.*;
 import com.example.Reservation_app.Users.User.dto.*;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.mapper.RegisterUserCommandToUserMapper;
@@ -15,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -84,15 +81,24 @@ public class UserService {
     userRepository.save(user);
     }
 
+    public void changePassword(SetUserPasswordCommand command){
+        User user = getUserByIdInternal(command.getUserId());
+        user.setPassword(command.getPassword());
+        user.setModifiedOn(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
 // @todo refactor to gowno
     public void delete(Long userId)
     {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-        List<Appointment> bandedAppointments = appointmentRepository.findByClient(user);
 
-        bandedAppointments
-                .forEach(bandedAppointment -> appointmentService.delete(bandedAppointment.getAppointment_id()));
+        appointmentRepository.findByClient(user)
+                .forEach(bandedAppointment -> appointmentService.delete(bandedAppointment.getAppointmentId()));
+
+        userRepository.delete(user);
 
 //        // nie moze byc zwykly deletAll, bo na app jest reference z review ~ moze custom deleteAll, który przyjmuje liste app
 //        for (Appointment app : bandedAppointments)

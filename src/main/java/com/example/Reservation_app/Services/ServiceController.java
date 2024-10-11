@@ -1,17 +1,16 @@
 package com.example.Reservation_app.Services;
 
-import com.example.Reservation_app.Services.Service.Service;
 import com.example.Reservation_app.Services.Service.command.AddServiceCommand;
 import com.example.Reservation_app.Services.Service.command.PatchServiceCommand;
 import com.example.Reservation_app.Services.Service.dto.GetServiceDto;
 import com.example.Reservation_app.Services.Service.dto.PatchServiceResponseDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/service")
@@ -22,8 +21,11 @@ public class ServiceController {
 
     //TODO tu zrobić paginację
     @GetMapping("/all")
-    List<Service> getAllServices(){
-        return serviceService.findAll();
+    Page<GetServiceDto> getAllServices(@RequestParam(defaultValue = "0") Integer page,
+                                       @RequestParam(defaultValue = "2") Integer pageSize,
+                                       @RequestParam(defaultValue = "createdAt") String sortBy,
+                                       @RequestParam(defaultValue = "desc") String sortDir){
+        return serviceService.findAll(page, pageSize, sortBy, sortDir);
     }
 
     @GetMapping("/by_id/{serviceId}")

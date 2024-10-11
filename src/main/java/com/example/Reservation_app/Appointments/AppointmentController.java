@@ -30,7 +30,7 @@ public class AppointmentController {
             @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "2") Integer pageSize,
-            @RequestParam(defaultValue = "appointment_date") String sortBy,
+            @RequestParam(defaultValue = "appointmentDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     )
     {
@@ -43,7 +43,7 @@ public class AppointmentController {
             @PathVariable Long userId,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "2") Integer pageSize,
-            @RequestParam(defaultValue = "appointment_date") String sortBy,
+            @RequestParam(defaultValue = "appointmentDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     )
     {

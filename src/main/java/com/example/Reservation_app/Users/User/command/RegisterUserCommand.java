@@ -1,5 +1,6 @@
 package com.example.Reservation_app.Users.User.command;
 
+import com.example.Reservation_app.Users.validator.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ public class RegisterUserCommand {
     String username;
     // @todo validator na dlugosc hasla i znaki spacjalne coby sie posral iz wrazenia
     @NotEmpty
+    @ValidPassword
     String password;
     @NotEmpty
     @Email
