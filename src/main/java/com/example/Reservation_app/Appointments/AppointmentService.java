@@ -88,6 +88,6 @@ public class AppointmentService {
     }
 
 
-//    private User assignFreeEmployee()
+    private User assignFreeEmployee()
 
 }

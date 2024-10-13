@@ -14,7 +14,7 @@ services:
       - '5432:5432'
     # pozwala na przechowywanie danych poza filesystemem kontenera, dzieki czemu po jego wylaczeniu nie tracimy danych
     volumes:
-      - './postgres_data:/var/lib/postgresql/data'
+      - 'postgres_data:/var/lib/postgres/data'
 
   pg_admin:
     image: 'dpage/pgadmin4'
