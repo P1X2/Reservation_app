@@ -2,19 +2,19 @@ name: 'reservation_app'
 
 services:
 
-  postgres:
-    # jaki image ma byc uzyty w tyn kontenerze
-    image: 'postgres:14.7'
-    container_name: 'postgres'
-    environment:
-      - 'POSTGRES_DB=reservation_DB'
-      - 'POSTGRES_PASSWORD=password'
-      - 'POSTGRES_USER=user'
-    ports:
-      - '5432:5432'
-    # pozwala na przechowywanie danych poza filesystemem kontenera, dzieki czemu po jego wylaczeniu nie tracimy danych
-    volumes:
-      - 'postgres_data:/var/lib/postgres/data'
+#  postgres:
+#    # jaki image ma byc uzyty w tyn kontenerze
+#    image: 'postgres:14.7'
+#    container_name: 'postgres'
+#    environment:
+#      - 'POSTGRES_DB=reservation_DB'
+#      - 'POSTGRES_PASSWORD=password'
+#      - 'POSTGRES_USER=user'
+#    ports:
+#      - '5432:5432'
+#    # pozwala na przechowywanie danych poza filesystemem kontenera, dzieki czemu po jego wylaczeniu nie tracimy danych
+##    volumes:
+##      - 'postgres_data:/var/lib/postgres/data'
 
   pg_admin:
     image: 'dpage/pgadmin4'
@@ -45,6 +45,5 @@ services:
 #    ports:
 #      - '8080:8080'
 
-
-volumes:
-  postgres_data:
+#volumes:
+#  postgres_data:

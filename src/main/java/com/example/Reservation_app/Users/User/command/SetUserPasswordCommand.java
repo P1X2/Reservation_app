@@ -10,16 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PatchUserCommand {
+public class SetUserPasswordCommand {
 
     @NotNull
     private Long userId;
-
-    private String username;
     @ValidPassword
     private String password;
-    @Email
-    private String email;
-    private String name;
-    private String surname;
 }
+

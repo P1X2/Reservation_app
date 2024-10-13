@@ -52,7 +52,7 @@ public class AppointmentService {
                 .map(appointmentToGetAppoinmentDtoMapper::map);
     }
 
-    CreateAppointmentResponseDto create(CreateAppointmentCommand createAppointmentCommand){
+    public CreateAppointmentResponseDto create(CreateAppointmentCommand createAppointmentCommand){
         Appointment appointment = createAppointmentCommandToAppointmentDtoMapper.map(createAppointmentCommand);
         appointmentRepository.save(appointment);
 
@@ -86,5 +86,8 @@ public class AppointmentService {
         return appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+
+
+//    private User assignFreeEmployee()
 
 }

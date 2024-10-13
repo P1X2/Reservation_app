@@ -1,9 +1,6 @@
 package com.example.Reservation_app.Users;
 
-import com.example.Reservation_app.Users.User.command.PatchUserCommand;
-import com.example.Reservation_app.Users.User.command.PatchUserRoleCommand;
-import com.example.Reservation_app.Users.User.command.PatchUserStatusCommand;
-import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
+import com.example.Reservation_app.Users.User.command.*;
 import com.example.Reservation_app.Users.User.dto.*;
 import com.example.Reservation_app.Users.User.User;
 import jakarta.validation.Valid;
@@ -36,16 +33,23 @@ public class UserController {
     }
 
     // @ todo to tylko admin
-    @PatchMapping("/patch-role")
+    @PatchMapping("/change-role")
     @ResponseStatus(HttpStatus.OK)
     public void patchUserRole(@RequestBody @Valid PatchUserRoleCommand command){
         userService.patchUserRole(command);
     }
 
     //@ todo to admin + robol , ale robol z mniejszymi prawami
-    @PatchMapping("/patch-status")
+    @PatchMapping("/change-status")
+    @ResponseStatus(HttpStatus.OK)
     public void patchUserStatus(@RequestBody @Valid PatchUserStatusCommand command){
         userService.patchUserStatus(command);
+    }
+
+    @PutMapping("change-password")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePassword(@RequestBody @Valid SetUserPasswordCommand command){
+        userService.changePassword(command);
     }
 
     @DeleteMapping("/delete")

@@ -1,4 +1,8 @@
 1. AppointmentService - alg do wyboru wolnego robola
-2. pododawac modified_on i created on to db;; wsm to zrobic bd
-3. paginacja w get all service + dto
-4. validator do hasla zebys sie zesrali
+2. pododawac modified_on i created on to db;; wsm to zrobic bd DONE
+
+3. paginacja w get all service + dto DONE
+4. validator do hasla zebys sie zesrali DONE
+5. osobny end  do zamiany hasla al minionow DONE
+6. refactor repositories done
+7. wlaczyc testy w pom.xml jak beda
