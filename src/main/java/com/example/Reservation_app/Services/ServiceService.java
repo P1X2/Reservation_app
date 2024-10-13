@@ -8,14 +8,17 @@ import com.example.Reservation_app.Services.Service.dto.PatchServiceResponseDto;
 import com.example.Reservation_app.Services.Service.mapper.AddServiceCommandToServiceMapper;
 import com.example.Reservation_app.Services.Service.mapper.ServiceToGetServiceDtoMapper;
 import com.example.Reservation_app.Services.Service.mapper.ServiceToPatchServiceResponseDto;
+import com.example.Reservation_app.Utils.ReservationAppUtils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
@@ -39,10 +42,10 @@ public class ServiceService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    List<Service> findAll(){
-        return serviceRepository.findAll();
+    Page<GetServiceDto> findAll(Integer page, Integer pageSize, String sortBy, String sortDir){
+        return serviceRepository.findAll(ReservationAppUtils.getPageMetadata(page, pageSize, sortBy, sortDir))
+                .map(serviceToGetServiceDtoMapper::map);
     }
-
 
     public void addNewService(AddServiceCommand command){
 
@@ -50,7 +53,7 @@ public class ServiceService {
         serviceRepository.save(service);
     }
 
-    public PatchServiceResponseDto patchService(PatchServiceCommand command){
+    public PatchServiceResponseDto patchService(PatchServiceCommand command) {
         Service service = serviceRepository.findById(command.getServiceId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -64,9 +67,6 @@ public class ServiceService {
         serviceRepository.save(service);
 
         return serviceToPatchServiceResponseDto.map(service);
-}
-
-//        serviceRepository.deleteById(serviceId);
-//    }
+    }
 
 }

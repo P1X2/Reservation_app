@@ -29,7 +29,7 @@ public class ReviewController {
     Page<GetReviewDto> getsByUser(@PathVariable Long userId,
                                   @RequestParam(defaultValue = "0") Integer page,
                                   @RequestParam(defaultValue = "2") Integer pageSize,
-                                  @RequestParam(defaultValue = "created_at") String sortBy,
+                                  @RequestParam(defaultValue = "createdAt") String sortBy,
                                   @RequestParam(defaultValue = "desc") String sortDir)
 
     {
@@ -40,7 +40,7 @@ public class ReviewController {
     Page<GetReviewDto> getByService(@PathVariable Long serviceId,
                                     @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "2") Integer pageSize,
-                                     @RequestParam(defaultValue = "created_at") String sortBy,
+                                     @RequestParam(defaultValue = "createdAt") String sortBy,
                                      @RequestParam(defaultValue = "desc") String sortDir)
     {
         return reviewService.getByServiceId(serviceId, page, pageSize, sortBy, sortDir);
