@@ -2,7 +2,7 @@ FROM eclipse-temurin:22-jdk
 
 WORKDIR /app
 
-COPY ../target/Reservation_app-0.0.1-SNAPSHOT.jar /app/application.jar
+COPY target/Reservation_app-0.0.1-SNAPSHOT.jar /app/application.jar
 
 # Na którym porcie kontener bedzie nasłuchiwał
 EXPOSE 8080

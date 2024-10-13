@@ -30,7 +30,7 @@ services:
 #    # automatyczne budowanie obrazu {context-określenie root-dira dla dockera; dockerfile- nazwa dokcerfila }
 #    build:
 #      context: './'
-#      dockerfile: 'Dockerfile'
+#      dockerfile: 'Docker/Dockerfile'
 #    container_name: 'reservation_app'
 #    # depends_on - które kontenery zostaną włąaczone najpierw
 #    depends_on:
