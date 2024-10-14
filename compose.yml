@@ -1,0 +1,16 @@
+name: 'reservation_app'
+
+services:
+  spring_boot_application:
+    build:
+      context: './'
+      dockerfile: 'Dockerfile2'
+    container_name: 'reservation_app'
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-cs5qg5qj1k6c739t5nlg-a.frankfurt-postgres.render.com:5432/reservation_app_db_6eay'
+      - 'SPRING_DATASOURCE_USERNAME=reservation_app_db_6eay_user'
+      - 'SPRING_DATASOURCE_PASSWORD=15xalrjxcB3kq75ztIOiqGSDKUlpubcW'
+      - 'SPRING_JPA_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect'
+      - 'SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver'
+    ports:
+      - '8080:8080'
