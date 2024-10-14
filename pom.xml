@@ -82,9 +82,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
-
-
 	</dependencies>
 
 
@@ -102,8 +99,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.10.1</version> <!-- Make sure you're using a version that supports JDK 21+ -->
 				<configuration>
-					<source>22</source> <!-- Ensure the source compatibility matches JDK 22 -->
-					<target>22</target> <!-- Ensure the target compatibility matches JDK 22 -->
+					<source>20</source>
+					<target>20</target>
+					<release>20</release>
 				</configuration>
 			</plugin>
 
