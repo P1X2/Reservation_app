@@ -13,4 +13,4 @@ services:
       - 'SPRING_JPA_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect'
       - 'SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver'
     ports:
-      - '8080:8080'
+      - '10120:8080'
