@@ -1,4 +1,4 @@
-name: 'reservation_app'
+name: 'reservation_app_local'
 
 services:
   spring_boot_application:
