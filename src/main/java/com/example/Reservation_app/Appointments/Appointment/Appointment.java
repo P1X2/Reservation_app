@@ -9,12 +9,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@Table(name = "appointments")
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,7 @@ public class Appointment {
     private Long appointmentId;
 
     private LocalDateTime appointmentDate;
-    //todo add to db
     private LocalDateTime createdAt;
-    //todo add to db
     private LocalDateTime modifiedOn;
 
     @Enumerated(EnumType.STRING)

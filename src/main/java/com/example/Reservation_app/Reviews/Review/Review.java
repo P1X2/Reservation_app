@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "reviews")
 public class Review {
 
     @Id
@@ -29,7 +30,6 @@ public class Review {
     private String reviewContent;
     private Integer rating;
     private LocalDateTime createdAt;
-    //todo add to db
     private LocalDateTime modifiedOn;
 
     @OneToOne

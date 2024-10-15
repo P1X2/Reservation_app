@@ -28,12 +28,12 @@ public class ServiceController {
         return serviceService.findAll(page, pageSize, sortBy, sortDir);
     }
 
-    @GetMapping("/by_id/{serviceId}")
+    @GetMapping("/by-id/{serviceId}")
     GetServiceDto getServiceByID(@PathVariable Long serviceId){
         return serviceService.findById(serviceId);
     }
 
-    @GetMapping("/by_name/{name}")
+    @GetMapping("/by-name/{name}")
     GetServiceDto getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "services")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,6 @@ public class Service {
     private Integer durationMinutes;
     private Integer price;
     private LocalDateTime createdAt;
-    //todo dopiac to do bd
     private LocalDateTime modifiedOn;
 
 }
