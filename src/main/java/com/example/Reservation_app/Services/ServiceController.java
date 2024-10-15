@@ -45,7 +45,7 @@ public class ServiceController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/patch")
+    @PatchMapping("/patch")
     ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody @Valid PatchServiceCommand command){
         return ResponseEntity.ok(serviceService.patchService(command));
     }
