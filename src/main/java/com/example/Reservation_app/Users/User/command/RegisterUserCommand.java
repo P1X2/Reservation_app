@@ -15,7 +15,6 @@ import lombok.Setter;
 public class RegisterUserCommand {
     @NotEmpty
     String username;
-    // @todo validator na dlugosc hasla i znaki spacjalne coby sie posral iz wrazenia
     @NotEmpty
     @ValidPassword
     String password;

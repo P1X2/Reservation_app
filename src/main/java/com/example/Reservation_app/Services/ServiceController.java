@@ -28,12 +28,12 @@ public class ServiceController {
         return serviceService.findAll(page, pageSize, sortBy, sortDir);
     }
 
-    @GetMapping("/by_id/{serviceId}")
+    @GetMapping("/by-id/{serviceId}")
     GetServiceDto getServiceByID(@PathVariable Long serviceId){
         return serviceService.findById(serviceId);
     }
 
-    @GetMapping("/by_name/{name}")
+    @GetMapping("/by-name/{name}")
     GetServiceDto getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }
@@ -45,7 +45,7 @@ public class ServiceController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/patch")
+    @PatchMapping("/patch")
     ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody @Valid PatchServiceCommand command){
         return ResponseEntity.ok(serviceService.patchService(command));
     }
