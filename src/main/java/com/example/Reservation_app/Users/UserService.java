@@ -1,6 +1,5 @@
 package com.example.Reservation_app.Users;
 
-import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import com.example.Reservation_app.Appointments.AppointmentRepository;
 import com.example.Reservation_app.Appointments.AppointmentService;
 import com.example.Reservation_app.Users.User.command.*;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -36,17 +35,7 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public RegisterUserResponseDto registerUser(RegisterUserCommand command){
-        User newUser = registerUserCommandToUserMapper.map(command);
 
-        userRepository.save(newUser);
-
-        return RegisterUserResponseDto.builder()
-                .username(newUser.getUsername())
-                .userStatus(newUser.getUserStatus())
-                .role(newUser.getRole())
-                .build();
-    }
 
     public PatchUserResponseDto patchUser(PatchUserCommand command){
         User user = getUserByIdInternal(command.getUserId());
@@ -89,7 +78,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-// @todo refactor to gowno
     public void delete(Long userId)
     {
         User user = userRepository.findById(userId)
@@ -99,14 +87,6 @@ public class UserService {
                 .forEach(bandedAppointment -> appointmentService.delete(bandedAppointment.getAppointmentId()));
 
         userRepository.delete(user);
-
-//        // nie moze byc zwykly deletAll, bo na app jest reference z review ~ moze custom deleteAll, który przyjmuje liste app
-//        for (Appointment app : bandedAppointments)
-//        {
-//            appointmentService.delete(app.getAppointment_id());
-//        }
-//
-//        userRepository.delete(user);
     }
 
     private User getUserByIdInternal(Long userId){

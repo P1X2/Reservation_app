@@ -24,6 +24,8 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return new UserPrincipal(user);
+        return UserPrincipal.builder()
+                .user(user)
+                .build();
     }
 }

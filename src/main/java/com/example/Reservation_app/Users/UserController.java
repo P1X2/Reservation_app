@@ -22,10 +22,6 @@ public class UserController {
         return userService.getById(userId);
     }
 
-    @PostMapping("/register")
-    ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody @Valid RegisterUserCommand registerUserCommand) {
-        return ResponseEntity.ok(userService.registerUser(registerUserCommand));
-    }
 // @ todo to kazdy siebie
     @PatchMapping("/patch-user-data")
     public ResponseEntity<PatchUserResponseDto> patchUser(@RequestBody @Valid PatchUserCommand command){

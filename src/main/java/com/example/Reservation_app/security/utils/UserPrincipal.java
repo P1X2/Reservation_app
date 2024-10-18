@@ -3,6 +3,7 @@ package com.example.Reservation_app.security.utils;
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.UserStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
+@Builder
 public class UserPrincipal implements UserDetails {
 
     private User user;
