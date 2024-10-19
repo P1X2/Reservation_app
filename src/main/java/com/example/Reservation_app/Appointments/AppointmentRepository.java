@@ -17,14 +17,14 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
     @Query(value = "SELECT * " +
-            "FROM APPOINTMENT " +
+            "FROM APPOINTMENTS " +
             "WHERE (APPOINTMENT_DATE BETWEEN :START AND :END)",
             nativeQuery = true)
     Page<Appointment> findAllByDate(@Param("START") LocalDateTime start, @Param("END") LocalDateTime end, Pageable metadata);
 
     @Query(value = "SELECT R.REVIEW_ID " +
-            "FROM APPOINTMENT A " +
-            "JOIN REVIEW R USING (APPOINTMENT_ID) " +
+            "FROM APPOINTMENTS A " +
+            "JOIN REVIEWS R USING (APPOINTMENT_ID) " +
             "WHERE (A.APPOINTMENT_ID = :appointmentId)", nativeQuery = true)
     Optional<Long> findReviewIdToDelete(@Param("appointmentId") Long appointmentId);
 
