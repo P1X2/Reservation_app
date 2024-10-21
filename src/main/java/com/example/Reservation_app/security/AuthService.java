@@ -35,7 +35,7 @@ public class AuthService {
                 .build();
     }
 
-    public boolean login(LoginUserCommand command){
+    public String login(LoginUserCommand command){
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(command.getUsername(), command.getPassword())
         );

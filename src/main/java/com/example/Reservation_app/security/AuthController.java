@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    ResponseEntity<Boolean> login(@RequestBody LoginUserCommand loginUserCommand){
+    ResponseEntity<String> login(@RequestBody LoginUserCommand loginUserCommand){
         return ResponseEntity.ok(authService.login(loginUserCommand));
     }
 }
