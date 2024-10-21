@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UsersService {
 
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
