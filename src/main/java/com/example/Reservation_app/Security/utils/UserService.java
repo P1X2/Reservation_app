@@ -1,4 +1,4 @@
-package com.example.Reservation_app.security.utils;
+package com.example.Reservation_app.Security.utils;
 
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.UserRepository;
@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

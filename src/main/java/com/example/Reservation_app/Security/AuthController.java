@@ -1,8 +1,7 @@
-package com.example.Reservation_app.security;
+package com.example.Reservation_app.Security;
 
 import com.example.Reservation_app.Users.User.command.LoginUserCommand;
 import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
-import com.example.Reservation_app.Users.User.dto.GetUserDto;
 import com.example.Reservation_app.Users.User.dto.RegisterUserResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

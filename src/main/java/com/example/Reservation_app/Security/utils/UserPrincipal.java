@@ -1,4 +1,4 @@
-package com.example.Reservation_app.security.utils;
+package com.example.Reservation_app.Security.utils;
 
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.UserStatus;

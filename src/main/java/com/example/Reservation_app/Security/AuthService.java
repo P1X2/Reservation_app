@@ -1,13 +1,12 @@
-package com.example.Reservation_app.security;
+package com.example.Reservation_app.Security;
 
 import com.example.Reservation_app.Users.User.User;
 import com.example.Reservation_app.Users.User.command.LoginUserCommand;
 import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
-import com.example.Reservation_app.Users.User.dto.GetUserDto;
 import com.example.Reservation_app.Users.User.dto.RegisterUserResponseDto;
 import com.example.Reservation_app.Users.User.mapper.RegisterUserCommandToUserMapper;
 import com.example.Reservation_app.Users.UserRepository;
-import com.example.Reservation_app.security.utils.JwtService;
+import com.example.Reservation_app.Security.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @Service
 @RequiredArgsConstructor

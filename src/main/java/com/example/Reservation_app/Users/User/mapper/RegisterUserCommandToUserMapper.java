@@ -21,7 +21,7 @@ public class RegisterUserCommandToUserMapper {
                 .name(command.getName())
                 .surname(command.getSurname())
                 .password(passwordEncoder.encode(command.getPassword()))
-                .username(command.getPassword())
+                .username(command.getUsername())
                 .email(command.getEmail())
                 .userStatus(UserStatus.ACTIVE)
                 .role(UserRole.CLIENT)
