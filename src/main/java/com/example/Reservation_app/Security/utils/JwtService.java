@@ -11,16 +11,13 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
 
-    private static String secretKey = "fsad687fvas78567as98df";
+    private static String secretKey;
 
     public JwtService() throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
@@ -28,9 +25,10 @@ public class JwtService {
         secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
     }
 
-    public String generateToken(String username){
+    public String generateToken(String username, List<String> roles){
 
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", roles);
 
         return Jwts.builder()
                 .claims()
@@ -57,6 +55,11 @@ public class JwtService {
 
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
+    }
+
+    public List<String> extractRoles(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("roles", List.class);
     }
 
     private <T> T extractClaims(String token, Function<Claims, T> claimsResolver){

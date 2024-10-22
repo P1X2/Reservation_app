@@ -1,6 +1,5 @@
 package com.example.Reservation_app.Reviews;
 
-import com.example.Reservation_app.Reviews.Review.Review;
 import com.example.Reservation_app.Reviews.Review.command.AddReviewCommand;
 import com.example.Reservation_app.Reviews.Review.dto.GetReviewDto;
 import com.example.Reservation_app.Reviews.Review.dto.PatchReviewResponseDto;
@@ -10,10 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-//TODO MOZE JAKAS LOGIKA SPRAWDZAJĄCA CZY ZIUT BYL NA APP W PRZECG OSTATNIEGO TYG(add_review)??
-// *dodawanie komentów do wizyt ktore sie wydarzyły (aapp.status check)
-
 
 
 @RestController

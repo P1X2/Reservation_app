@@ -15,6 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -45,7 +48,7 @@ public class AuthService {
 
 
         if(auth.isAuthenticated()){
-            return jwtService.generateToken(command.getUsername());
+            return jwtService.generateToken(command.getUsername(), Collections.singletonList(userRepository.findByUsername(command.getUsername()).get().getRole().toString().toUpperCase()));
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,  String.format(USER_PRINCIPAL_NOT_FOUND_MSG, command.getUsername()));
