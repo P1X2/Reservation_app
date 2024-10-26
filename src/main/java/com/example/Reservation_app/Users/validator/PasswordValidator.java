@@ -40,7 +40,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
             buildContext("Password must contain at least one number", context);
             return false;
         }
-        if (!password.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?].*")) {
+        if (!password.matches(".*[!@#$%^&*()_+\\-=\\{};':\"\\\\|,.<>/?].*")) {
             buildContext("Password must contain at least one special character", context);
             return false;
         }

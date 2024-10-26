@@ -2,7 +2,6 @@ package com.example.Reservation_app.Users;
 
 import com.example.Reservation_app.Users.User.command.*;
 import com.example.Reservation_app.Users.User.dto.*;
-import com.example.Reservation_app.Users.User.User;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,47 +14,43 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UsersService usersService;
 
     @GetMapping("/get_by_id")
     GetUserDto getById(@RequestParam Long userId) {
-        return userService.getById(userId);
+        return usersService.getById(userId);
     }
 
-    @PostMapping("/register")
-    ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody @Valid RegisterUserCommand registerUserCommand) {
-        return ResponseEntity.ok(userService.registerUser(registerUserCommand));
-    }
 // @ todo to kazdy siebie
     @PatchMapping("/patch-user-data")
     public ResponseEntity<PatchUserResponseDto> patchUser(@RequestBody @Valid PatchUserCommand command){
-        return ResponseEntity.ok(userService.patchUser(command));
+        return ResponseEntity.ok(usersService.patchUser(command));
     }
 
     // @ todo to tylko admin
     @PatchMapping("/change-role")
     @ResponseStatus(HttpStatus.OK)
     public void patchUserRole(@RequestBody @Valid PatchUserRoleCommand command){
-        userService.patchUserRole(command);
+        usersService.patchUserRole(command);
     }
 
     //@ todo to admin + robol , ale robol z mniejszymi prawami
     @PatchMapping("/change-status")
     @ResponseStatus(HttpStatus.OK)
     public void patchUserStatus(@RequestBody @Valid PatchUserStatusCommand command){
-        userService.patchUserStatus(command);
+        usersService.patchUserStatus(command);
     }
 
     @PutMapping("change-password")
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@RequestBody @Valid SetUserPasswordCommand command){
-        userService.changePassword(command);
+        usersService.changePassword(command);
     }
 
     @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@RequestParam Long userId) {
-        userService.delete(userId);
+        usersService.delete(userId);
     }
 
 
