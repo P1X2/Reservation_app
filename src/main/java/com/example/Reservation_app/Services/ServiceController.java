@@ -20,7 +20,7 @@ public class ServiceController {
 
     private final ServiceService serviceService;
 
-    @PreAuthorize("hasAuthority('ROLE_PRESIDENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @GetMapping("/all")
     Page<GetServiceDto> getAllServices(@RequestParam(defaultValue = "0") Integer page,
                                        @RequestParam(defaultValue = "2") Integer pageSize,
@@ -28,23 +28,26 @@ public class ServiceController {
                                        @RequestParam(defaultValue = "desc") String sortDir){
         return serviceService.findAll(page, pageSize, sortBy, sortDir);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @GetMapping("/by-id/{serviceId}")
     GetServiceDto getServiceByID(@PathVariable Long serviceId){
         return serviceService.findById(serviceId);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @GetMapping("/by-name/{name}")
     GetServiceDto getServiceByName(@PathVariable String name){
         return serviceService.findByName(name);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_PRESIDENT')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     void addService(@RequestBody @Valid AddServiceCommand command){
         serviceService.addNewService(command);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/patch")
     ResponseEntity<PatchServiceResponseDto> patchService(@RequestBody @Valid PatchServiceCommand command){
