@@ -35,7 +35,7 @@ public class WebSecurityConfig {
         http
                 .cors(cors -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+                    configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://reservation-app-api-v2-wo0u.onrender.com"));
                     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                     configuration.setAllowCredentials(true);

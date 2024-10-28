@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-//todo menago + robol
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE')")
     @GetMapping("/get-by-date")
     Page<GetAppointmentDto> getAppointmentsByDate(
             @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
@@ -37,7 +38,7 @@ public class AppointmentController {
         return appointmentService.getByDate(date, page, pageSize, sortBy, sortDir);
     }
 
-    //todo wszyscy
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @GetMapping("/get-by-userId/{userId}")
     Page<GetAppointmentDto> getAppointmentsByUserId(
             @PathVariable Long userId,
@@ -50,6 +51,7 @@ public class AppointmentController {
         return appointmentService.getByUserId(userId, page, pageSize, sortBy, sortDir);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<CreateAppointmentResponseDto> createNewAppointment(@Valid @RequestBody CreateAppointmentCommand createAppointmentCommand)
@@ -57,7 +59,8 @@ public class AppointmentController {
        return ResponseEntity.ok(appointmentService.create(createAppointmentCommand));
     }
 
-    @PutMapping("/update-status/{appointmentId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE')")
+    @PatchMapping("/update-status/{appointmentId}")
     @ResponseStatus(HttpStatus.OK)
     void updateAppointmentStatus(
             @PathVariable Long appointmentId,
@@ -67,6 +70,7 @@ public class AppointmentController {
         appointmentService.updateStatus(appointmentId, newStatus);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE')")
     @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.OK)
     void deleteAppointment(@RequestParam Long appointmentId)
