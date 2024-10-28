@@ -10,17 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -43,10 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
         logger.info("Incoming request to URL: {}", request.getRequestURI());
 
         // Validate token
-        if (authHeader == null) {
-            logger.warn("Missing Authorization header");
-        } else if (!authHeader.startsWith("Bearer ")) {
-            logger.warn("Invalid Authorization header format: {}", authHeader);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            logger.warn("Missing or invalid Authorization header");
         } else {
             token = authHeader.substring(7);
             username = jwtService.extractUsername(token);
@@ -56,19 +49,21 @@ public class JwtFilter extends OncePerRequestFilter {
         // Authentication object check
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = context.getBean(UserDetailsService.class).loadUserByUsername(username);
+            var userDetailsService = context.getBean(UserService.class); // Use your UserService
+            var userDetails = userDetailsService.loadUserByUsername(username);
             logger.info("Loaded UserDetails for username: {}", username);
 
             if (jwtService.validateToken(token, userDetails)) {
                 logger.info("Token is valid for user: {}", username);
 
-                List<String> roles = jwtService.extractRoles(token);
-                var authorities = roles.stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .toList();
-
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+                // Use authorities from UserDetails to ensure consistency
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // Log the authorities
+                logger.info("Authorities set in Authentication object: {}", userDetails.getAuthorities());
+
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } else {
                 logger.warn("Token validation failed for user: {}", username);
