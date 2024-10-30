@@ -17,12 +17,12 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static String secretKey;
+    private static final String secretKey = "saaf412341qdweWDQwdas";
 
     public JwtService() throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
         SecretKey sk = keyGenerator.generateKey();
-        secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+//        secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
     }
 
     public String generateToken(String username, List<String> roles){
