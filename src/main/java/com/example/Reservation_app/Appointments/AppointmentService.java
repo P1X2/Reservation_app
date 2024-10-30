@@ -42,7 +42,6 @@ public class AppointmentService {
                 .map(appointmentToGetAppoinmentDtoMapper::map);
     }
 
-    //TODO TEST
     public Page<GetAppointmentDto> getByUserId(Long userId, Integer page, Integer pageSize, String sortBy, String sortDir)
     {
         User client = userRepository.findById(userId).
@@ -86,8 +85,5 @@ public class AppointmentService {
         return appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-
-
-//    private User assignFreeEmployee()
 
 }

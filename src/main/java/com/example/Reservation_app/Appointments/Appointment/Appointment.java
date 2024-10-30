@@ -29,7 +29,6 @@ public class Appointment {
     private AppointmentStatus status;
 
     @ManyToOne(optional = false)
-    // name = "xxx" - references table in DB, not var in service instance (fk's in appointment table)
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
@@ -40,8 +39,5 @@ public class Appointment {
     @ManyToOne(optional = false)
     @JoinColumn(name = "employee_id", nullable = false)
     private User employee;
-
-//    @OneToOne(optional = true, mappedBy = "appointment", cascade = CascadeType.ALL)
-//    private Review review;
 
 }

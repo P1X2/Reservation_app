@@ -24,7 +24,6 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final ApplicationContext context;
 
-    // Logger instance
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
     @Override
@@ -34,10 +33,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
 
-        // Log the incoming request URL
         logger.info("Incoming request to URL: {}", request.getRequestURI());
 
-        // Validate token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             logger.warn("Missing or invalid Authorization header");
         } else {
@@ -46,17 +43,15 @@ public class JwtFilter extends OncePerRequestFilter {
             logger.info("Extracted token and username: {}, {}", token, username);
         }
 
-        // Authentication object check
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            var userDetailsService = context.getBean(UserService.class); // Use your UserService
+            var userDetailsService = context.getBean(UserService.class);
             var userDetails = userDetailsService.loadUserByUsername(username);
             logger.info("Loaded UserDetails for username: {}", username);
 
             if (jwtService.validateToken(token, userDetails)) {
                 logger.info("Token is valid for user: {}", username);
 
-                // Use authorities from UserDetails to ensure consistency
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -72,7 +67,6 @@ public class JwtFilter extends OncePerRequestFilter {
             logger.warn("Username is null or authentication already exists.");
         }
 
-        // Continue the filter chain
         filterChain.doFilter(request, response);
     }
 }

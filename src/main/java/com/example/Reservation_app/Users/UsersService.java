@@ -40,7 +40,6 @@ public class UsersService {
     public PatchUserResponseDto patchUser(PatchUserCommand command){
         User user = getUserByIdInternal(command.getUserId());
 
-        // todo move to patch calss, albo nie wyjebane
         Optional.ofNullable(command.getUsername()).ifPresent(user::setUsername);
         Optional.ofNullable(command.getPassword()).ifPresent(user::setPassword);
         Optional.ofNullable(command.getEmail()).ifPresent(user::setEmail);

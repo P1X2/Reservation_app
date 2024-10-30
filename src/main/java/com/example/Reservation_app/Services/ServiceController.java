@@ -54,14 +54,4 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.patchService(command));
     }
 
-
-
-
-//    //TODO ZASTANOWIC SIE CZY TO JEST POTRZEBNE ---- nie do wypierdolenia
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping("/delete")
-//    void deleteService(@RequestParam Long serviceId){
-//        serviceService.delete(serviceId);
-//    }
-
 }

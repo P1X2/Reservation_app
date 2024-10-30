@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-//todo endpoi
-// AUTOMATYCZNY SERVICE DO ZMIANY STANU APP JESLI DATA W DB < NOW()
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/appointment")
