@@ -22,7 +22,7 @@ import com.example.Reservation_app.Appointments.Appointment.Appointment
 import com.example.Reservation_app.Appointments.AppointmentRepository
 import com.example.Reservation_app.Appointments.AppointmentService
 
-class UsersServiceSpec extends Specification {
+class UsersServiceTest extends Specification {
 
     def userRepository = Mock(UserRepository)
     def appointmentRepository = Mock(AppointmentRepository)

@@ -19,7 +19,7 @@ import com.example.Reservation_app.Utils.ReservationAppUtils
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 
-class ServiceServiceSpec extends Specification {
+class ServiceServiceTest extends Specification {
 
     def serviceRepository = Mock(ServiceRepository)
     def addServiceCommandToServiceMapper = Mock(AddServiceCommandToServiceMapper)

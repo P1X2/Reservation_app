@@ -22,7 +22,7 @@ import com.example.Reservation_app.Utils.ReservationAppUtils
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 
-class AppointmentServiceSpec extends Specification {
+class AppointmentServiceTest extends Specification {
 
     def appointmentRepository = Mock(AppointmentRepository)
     def userRepository = Mock(UserRepository)
