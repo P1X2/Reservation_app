@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -48,7 +49,7 @@ public class AuthService {
 
 
         if(auth.isAuthenticated()){
-            return jwtService.generateToken(command.getUsername(), Collections.singletonList(userRepository.findByUsername(command.getUsername()).get().getRole().toString().toUpperCase()));
+            return jwtService.generateToken(userRepository.findByUsername(command.getUsername()).orElseThrow(() -> new UsernameNotFoundException("user not found")));
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,  String.format(USER_PRINCIPAL_NOT_FOUND_MSG, command.getUsername()));

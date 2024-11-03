@@ -1,5 +1,6 @@
 package com.example.Reservation_app.Security.utils;
 
+import com.example.Reservation_app.Users.User.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -89,6 +90,20 @@ public class JwtService {
     }
 
 
+    public String generateToken(User user) {
 
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", Collections.singletonList(user.getRole().toString().toUpperCase()));
 
+        return Jwts.builder()
+                .claims()
+                .add(claims)
+                .subject(user.getUsername())
+                .id(user.getUserId().toString())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .and()
+                .signWith(generateKey())
+                .compact();
+    }
 }
