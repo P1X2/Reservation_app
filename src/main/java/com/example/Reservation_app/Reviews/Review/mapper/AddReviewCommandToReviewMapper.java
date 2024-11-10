@@ -13,8 +13,6 @@ public class AddReviewCommandToReviewMapper {
         return Review.builder()
                 .reviewContent(command.getReviewContent())
                 .rating(command.getRating())
-                .createdAt(LocalDateTime.now())
-                .modifiedOn(LocalDateTime.now())
                 .build();
     }
 }

@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Table(name = "reviews")
+@EntityListeners(AuditingEntityListener.class)
 public class Review {
 
     @Id
@@ -29,7 +32,9 @@ public class Review {
 
     private String reviewContent;
     private Integer rating;
+    @CreatedDate
     private LocalDateTime createdAt;
+    @LastModifiedDate
     private LocalDateTime modifiedOn;
 
     @OneToOne

@@ -62,7 +62,6 @@ public class ServiceService {
         Optional.ofNullable(command.getDurationMinutes()).ifPresent(service::setDurationMinutes);
         Optional.ofNullable(command.getPrice()).ifPresent(service::setPrice);
 
-        service.setModifiedOn(LocalDateTime.now());
 
         serviceRepository.save(service);
 

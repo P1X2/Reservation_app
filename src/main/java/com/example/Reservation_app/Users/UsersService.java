@@ -24,7 +24,6 @@ public class UsersService {
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
     private final AppointmentService appointmentService;
-    private final RegisterUserCommandToUserMapper registerUserCommandToUserMapper;
     private final UserToGetUserDtoMapper userToGetUserDtoMapper;
     private final UserToPatchUserResponseDtoMapper userToPatchUserResponseDtoMapper;
 
@@ -45,7 +44,6 @@ public class UsersService {
         Optional.ofNullable(command.getEmail()).ifPresent(user::setEmail);
         Optional.ofNullable(command.getName()).ifPresent(user::setName);
         Optional.ofNullable(command.getSurname()).ifPresent(user::setSurname);
-        user.setModifiedOn(LocalDateTime.now());
 
         userRepository.save(user);
 
@@ -56,7 +54,6 @@ public class UsersService {
     public void patchUserRole(PatchUserRoleCommand command){
         User user = getUserByIdInternal(command.getUserId());
         user.setRole(command.getUserRole());
-        user.setModifiedOn(LocalDateTime.now());
 
         userRepository.save(user);
     }
@@ -64,7 +61,6 @@ public class UsersService {
     public void patchUserStatus(PatchUserStatusCommand command){
     User user = getUserByIdInternal(command.getUserId());
     user.setUserStatus(command.getUserStatus());
-    user.setModifiedOn(LocalDateTime.now());
 
     userRepository.save(user);
     }
@@ -72,7 +68,6 @@ public class UsersService {
     public void changePassword(SetUserPasswordCommand command){
         User user = getUserByIdInternal(command.getUserId());
         user.setPassword(command.getNewPassword());
-        user.setModifiedOn(LocalDateTime.now());
 
         userRepository.save(user);
     }

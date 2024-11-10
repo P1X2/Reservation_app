@@ -25,8 +25,6 @@ public class RegisterUserCommandToUserMapper {
                 .email(command.getEmail())
                 .userStatus(UserStatus.ACTIVE)
                 .role(UserRole.CLIENT)
-                .createdAt(LocalDateTime.now())
-                .modifiedOn(LocalDateTime.now())
                 .build();
     }
 

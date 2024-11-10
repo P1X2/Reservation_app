@@ -21,14 +21,12 @@ public class CreateAppointmentCommandToAppointmentDtoMapper {
     public Appointment map(CreateAppointmentCommand command){
         return Appointment.builder()
                 .appointmentDate(command.getAppointmentDate())
-                .createdAt(LocalDateTime.now())
-                .modifiedOn(LocalDateTime.now())
                 .status(AppointmentStatus.PENDING_PAYMENT)
                 .service(serviceRepository.findById(command.getServiceId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Service not found")))
                 .client(userRepository.findById(command.getClientId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found")))
-                .employee(userRepository.findById(command.getEmployeeId())
+                .employee(userRepository.findById(4L)
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"))) // todo tu dadac jakas karuzele do wyboru wolnego pracownika
                 .build();
     }

@@ -16,7 +16,6 @@ public class AddServiceCommandToServiceMapper {
                 .description(command.getDescription())
                 .durationMinutes(command.getDurationMinutes())
                 .price(command.getPrice())
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 }
