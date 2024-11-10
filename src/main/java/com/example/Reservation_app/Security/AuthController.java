@@ -5,6 +5,7 @@ import com.example.Reservation_app.Users.User.command.RegisterUserCommand;
 import com.example.Reservation_app.Users.User.dto.RegisterUserResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,10 @@ public class AuthController {
 
     @PostMapping("/login")
     ResponseEntity<String> login(@RequestBody LoginUserCommand loginUserCommand){
-        return ResponseEntity.ok(authService.login(loginUserCommand));
+        try {
+            return ResponseEntity.ok(authService.login(loginUserCommand));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

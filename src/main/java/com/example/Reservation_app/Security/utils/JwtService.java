@@ -1,6 +1,7 @@
 package com.example.Reservation_app.Security.utils;
 
 import com.example.Reservation_app.Users.User.User;
+import com.example.Reservation_app.Users.User.UserStatus;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -94,7 +95,9 @@ public class JwtService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", Collections.singletonList(user.getRole().toString().toUpperCase()));
-
+        if (user.getUserStatus() == UserStatus.SUSPENDED) {
+            throw new RuntimeException();
+        }
         return Jwts.builder()
                 .claims()
                 .add(claims)
