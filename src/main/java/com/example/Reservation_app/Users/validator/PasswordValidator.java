@@ -13,7 +13,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     }
 
     private boolean validate(String password, ConstraintValidatorContext context) {
-        return lengthCheck(password, context) && upperCaseCheck(password, context) && numberAndSpecialsCheck(password, context);
+        return password == null || (lengthCheck(password, context) && upperCaseCheck(password, context) && numberAndSpecialsCheck(password, context));
     }
 
     private boolean lengthCheck(String password, ConstraintValidatorContext context) {

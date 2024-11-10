@@ -71,7 +71,7 @@ public class UsersService {
 
     public void changePassword(SetUserPasswordCommand command){
         User user = getUserByIdInternal(command.getUserId());
-        user.setPassword(command.getPassword());
+        user.setPassword(command.getNewPassword());
         user.setModifiedOn(LocalDateTime.now());
 
         userRepository.save(user);

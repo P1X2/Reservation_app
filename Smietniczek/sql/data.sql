@@ -32,7 +32,7 @@ VALUES
 ('2024-11-15 14:00:00', NOW(), NOW(), 'DONE_PAYMENT', 3, 10, 13),     -- Pedicure for client3 with employee3
 ('2024-10-05 11:00:00', NOW(), NOW(), 'COMPLETED', 4, 8, 11),        -- Hair Coloring for client1 with employee1
 ('2024-10-01 09:00:00', NOW(), NOW(), 'COMPLETED', 5, 9, 12),        -- Facial for client2 with employee2
-('2024-10-08 15:00:00', NOW(), NOW(), 'CANCELED', 1, 10, 13);         -- Haircut for client3 with employee3
+('2024-10-08 15:00:00', NOW(), NOW(), 'CANCELLED', 1, 10, 13);         -- Haircut for client3 with employee3
 
 
 -- Inserting Reviews for COMPLETED Appointments

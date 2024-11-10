@@ -56,7 +56,7 @@ public class AppointmentController {
        return ResponseEntity.ok(appointmentService.create(createAppointmentCommand));
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @PatchMapping("/update-status/{appointmentId}")
     @ResponseStatus(HttpStatus.OK)
     void updateAppointmentStatus(

@@ -14,7 +14,10 @@ public class SetUserPasswordCommand {
 
     @NotNull
     private Long userId;
+    @NotNull
+    private String oldPassword;
+    @NotNull
     @ValidPassword
-    private String password;
+    private String newPassword;
 }
 

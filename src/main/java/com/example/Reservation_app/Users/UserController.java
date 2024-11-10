@@ -17,7 +17,7 @@ public class UserController {
 
     private final UsersService usersService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
     @GetMapping("/get_by_id")
     GetUserDto getById(@RequestParam Long userId) {
         return usersService.getById(userId);

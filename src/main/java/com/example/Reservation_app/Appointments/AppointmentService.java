@@ -73,7 +73,7 @@ public class AppointmentService {
     {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        //@TODO wywalic to gowno spod spodu
         Long bandedReviewId = appointmentRepository.findReviewIdToDelete(appointment.getAppointmentId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
