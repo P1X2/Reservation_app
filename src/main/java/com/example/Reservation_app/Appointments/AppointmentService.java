@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -73,11 +74,7 @@ public class AppointmentService {
     {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        //@TODO wywalic to gowno spod spodu
-        Long bandedReviewId = appointmentRepository.findReviewIdToDelete(appointment.getAppointmentId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        reviewRepository.deleteById(bandedReviewId);
+        appointmentRepository.findReviewIdToDelete(appointment.getAppointmentId()).ifPresent(reviewRepository::deleteById);
         appointmentRepository.delete(appointment);
     }
 
