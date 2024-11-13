@@ -9,6 +9,7 @@ import com.example.Reservation_app.Users.User.mapper.RegisterUserCommandToUserMa
 import com.example.Reservation_app.Users.User.mapper.UserToGetUserDtoMapper;
 import com.example.Reservation_app.Users.User.mapper.UserToPatchUserResponseDtoMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UsersService {
 
     private final UserRepository userRepository;
@@ -33,8 +34,6 @@ public class UsersService {
                 .map(userToGetUserDtoMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-
-
 
     public PatchUserResponseDto patchUser(PatchUserCommand command){
         User user = getUserByIdInternal(command.getUserId());
