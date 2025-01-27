@@ -2,6 +2,7 @@ package com.example.Reservation_app.Users.User;
 
 
 
+import com.example.Reservation_app.Appointments.Appointment.Appointment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -46,4 +48,6 @@ public class User {
     @LastModifiedDate
     private LocalDateTime modifiedOn;
 
+    @OneToMany(mappedBy = "employee")
+    private List<Appointment> appointmentList;
 }
