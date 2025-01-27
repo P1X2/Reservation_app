@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @AllArgsConstructor
@@ -21,6 +23,12 @@ public class UserController {
     @GetMapping("/get_by_id")
     GetUserDto getById(@RequestParam Long userId) {
         return usersService.getById(userId);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")
+    @GetMapping("/get-all-clients")
+    List<GetUserDto> getAllUsers(){
+        return usersService.getAllClients();
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_PRESIDENT', 'ROLE_EMPLOYEE', 'ROLE_CLIENT')")

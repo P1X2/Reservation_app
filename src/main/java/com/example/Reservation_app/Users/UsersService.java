@@ -2,20 +2,18 @@ package com.example.Reservation_app.Users;
 
 import com.example.Reservation_app.Appointments.AppointmentRepository;
 import com.example.Reservation_app.Appointments.AppointmentService;
+import com.example.Reservation_app.Users.User.UserRole;
 import com.example.Reservation_app.Users.User.command.*;
 import com.example.Reservation_app.Users.User.dto.*;
 import com.example.Reservation_app.Users.User.User;
-import com.example.Reservation_app.Users.User.mapper.RegisterUserCommandToUserMapper;
 import com.example.Reservation_app.Users.User.mapper.UserToGetUserDtoMapper;
 import com.example.Reservation_app.Users.User.mapper.UserToPatchUserResponseDtoMapper;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +31,13 @@ public class UsersService {
         return userRepository.findById(userId)
                 .map(userToGetUserDtoMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    List<GetUserDto> getAllClients() {
+        return userRepository.findAll().stream()
+                .filter(user -> user.getRole().equals(UserRole.CLIENT))
+                .map(userToGetUserDtoMapper::map)
+                .toList();
     }
 
     public PatchUserResponseDto patchUser(PatchUserCommand command){
