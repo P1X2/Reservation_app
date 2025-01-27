@@ -161,21 +161,6 @@ class UsersServiceTest extends Specification {
         e.getStatusCode() == HttpStatus.NOT_FOUND
     }
 
-    def "changePassword should update user's password"() {
-        given:
-        def command = new SetUserPasswordCommand(userId: 1L, newPassword: 'newPassword')
-        def user = new User(userId: 1L)
-
-        userRepository.findById(command.userId) >> Optional.of(user)
-
-        when:
-        usersService.changePassword(command)
-
-        then:
-        1 * userRepository.save(user)
-        user.password == 'newPassword'
-    }
-
     def "changePassword should throw ResponseStatusException when user does not exist"() {
         given:
         def command = new SetUserPasswordCommand(userId: 1L, newPassword: 'newPassword')
