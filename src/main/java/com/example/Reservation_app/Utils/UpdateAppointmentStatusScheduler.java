@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -17,10 +16,10 @@ public class UpdateAppointmentStatusScheduler {
 
     private final AppointmentRepository appointmentRepository;
 
-    @Scheduled(fixedRate = 20, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedRate = 20000)
     private void updateStatusToCompleted(){
         List<Appointment> toUpdate = appointmentRepository.findAll().stream()
-                .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.DONE_PAYMENT))
+                .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.APPOINTMENT_CONFIRMED))
                 .filter(appointment -> appointment.getAppointmentDate().isBefore(LocalDateTime.now()))
                 .toList();
 
