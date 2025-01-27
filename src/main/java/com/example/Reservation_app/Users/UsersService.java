@@ -10,6 +10,7 @@ import com.example.Reservation_app.Users.User.mapper.UserToGetUserDtoMapper;
 import com.example.Reservation_app.Users.User.mapper.UserToPatchUserResponseDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -70,8 +71,9 @@ public class UsersService {
     }
 
     public void changePassword(SetUserPasswordCommand command){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         User user = getUserByIdInternal(command.getUserId());
-        user.setPassword(command.getNewPassword());
+        user.setPassword(encoder.encode(command.getNewPassword()));
 
         userRepository.save(user);
     }
