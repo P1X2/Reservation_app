@@ -26,7 +26,8 @@ public class ChooseEmployeeService {
 
         return employeeBusiness.entrySet().stream()
                 .reduce((a,b) -> a.getValue() < b.getValue() ? a :b)
-                .map(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .map(User::getUserId)
                 .orElseGet(this::getPresidentId);
     }
 
