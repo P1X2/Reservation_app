@@ -28,8 +28,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             "WHERE (A.APPOINTMENT_ID = :appointmentId)", nativeQuery = true)
     Optional<Long> findReviewIdToDelete(@Param("appointmentId") Long appointmentId);
 
-    // delete user method
+
     List<Appointment> findByClient(User client);
-    // find app by client method
+
     Page<Appointment> findByClient(User client, Pageable metadata);
+
+
 }

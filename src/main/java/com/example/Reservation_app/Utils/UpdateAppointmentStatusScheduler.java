@@ -18,7 +18,7 @@ public class UpdateAppointmentStatusScheduler {
 
     private final AppointmentRepository appointmentRepository;
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedDelay = 30000)
     public void updateStatusToCompleted(){
         List<Appointment> toUpdate = appointmentRepository.findAll().stream()
                 .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.APPOINTMENT_CONFIRMED))
@@ -28,9 +28,26 @@ public class UpdateAppointmentStatusScheduler {
         toUpdate.forEach(
                 appointment -> {
                     appointment.setStatus(AppointmentStatus.COMPLETED);
-                    appointmentRepository.save(appointment);
                 }
         );
+        appointmentRepository.saveAll(toUpdate);
         log.info("Appointment statuses updated from CONFIRMED to COMPLETED");
+    }
+
+
+    @Scheduled(fixedDelay = 30000)
+    public void updateStatusToCancelled(){
+        List<Appointment> toUpdate = appointmentRepository.findAll().stream()
+                .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.PENDING_PAYMENT))
+                .filter(appointment -> appointment.getAppointmentDate().isBefore(LocalDateTime.now()))
+                .toList();
+
+        toUpdate.forEach(
+                appointment -> {
+                    appointment.setStatus(AppointmentStatus.CANCELLED);
+                }
+        );
+        appointmentRepository.saveAll(toUpdate);
+        log.info("Not payed appointment statuses updated from PENDING_PAYMENT to CANCELLED");
     }
 }
